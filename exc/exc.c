@@ -6,11 +6,15 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:32:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/12 21:15:25 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/12 23:54:34 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exc.h"
 
-
+void    excution(t_exc *val)
+{
+    
+    
+}
 

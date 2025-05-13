@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:18:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/12 22:02:36 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/13 00:31:30 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <fcntl.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
 
 
 typedef struct s_exc
@@ -71,5 +76,7 @@ t_cmd *set_struct();
 t_env *set_env(char **env);
 // PATH
 char **set_path(t_env *v);
+//GET_NEXT_LINE
+char	*get_next_line(int fd);
 
 #endif
