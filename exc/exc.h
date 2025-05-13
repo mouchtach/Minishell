@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:18:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 12:54:19 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:43:28 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <fcntl.h>
-#include "Lib_ft/libft.h"
+#include "lb_ft/libft.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100

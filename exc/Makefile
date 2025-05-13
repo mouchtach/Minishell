@@ -5,7 +5,7 @@ OBJ = $(SRC:.c=.o)
 
 NAME = minishell
 
-LIBFT_DIR = Lib_ft
+LIBFT_DIR = lb_ft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 all: $(NAME)
