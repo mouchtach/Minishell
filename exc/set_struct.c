@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:34:20 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/12 20:35:47 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:22:24 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,30 @@ t_cmd *set_struct(void)
 
     t_redirec *red1;
     t_redirec *red2;
+    t_redirec *red3;
+    t_redirec *red4;
 
-//cmd 1 ;
+// cmd 1 ;
 // input files;
-    red2 = creat_list_re("ot", D_HERDOC, NULL);
+    red3 = creat_list_re("tt", D_HERDOC, NULL);
+    red2 = creat_list_re("ot", D_HERDOC, red3);
     red1 = creat_list_re("in", D_FILE, red2);
 // output files;
+    red4 = creat_list_re("ph", D_HERDOC, NULL);
 
     list2 = malloc (sizeof(t_cmd));
     list2->cmd = ft_split("grep hello", ' ');
-    list2->input = NULL;
+    list2->input = red4; 
     list2->output = creat_list_re("out", D_FILE, NULL);
     list2->next =  NULL;
+
+
     list = malloc (sizeof(t_cmd));
     list->cmd = ft_split("cat -e", ' ');
     list->input = red1;
     list->output = creat_list_re("out", D_FILE, NULL);
     list->next = list2;
     return (list);
+
+    // cat -e < in << ot << tt > out | grep hello << ph > out
 }
