@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exc.c                                              :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abenajib <abenajib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 17:32:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 23:48:53 by ymouchta         ###   ########.fr       */
+/*   Created: 2024/10/22 15:23:46 by abenajib          #+#    #+#             */
+/*   Updated: 2025/04/07 18:48:12 by abenajib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void    excution(t_exc *val)
+size_t	ft_strlen(const char *s)
 {
-    
-    
-}
+	size_t	count;
 
+	if (!s)
+		return (0);
+	count = 0;
+	while (s[count])
+		count++;
+	return (count);
+}

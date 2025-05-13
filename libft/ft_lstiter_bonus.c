@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exc.c                                              :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abenajib <abenajib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 17:32:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 23:48:53 by ymouchta         ###   ########.fr       */
+/*   Created: 2024/10/30 19:42:31 by abenajib          #+#    #+#             */
+/*   Updated: 2025/04/05 13:01:39 by abenajib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void    excution(t_exc *val)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-    
-    
-}
+	t_list	*c;
 
+	if (!lst || !f)
+		return ;
+	c = lst;
+	while (c != NULL)
+	{
+		f(c->value);
+		c = c->next;
+	}
+}

@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exc.c                                              :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abenajib <abenajib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 17:32:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 23:48:53 by ymouchta         ###   ########.fr       */
+/*   Created: 2024/10/23 09:19:48 by abenajib          #+#    #+#             */
+/*   Updated: 2025/04/05 15:39:08 by abenajib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void    excution(t_exc *val)
+char	*ft_strchr(const char *s, int c)
 {
-    
-    
-}
+	int	i;
 
+	i = 0;
+	while (s[i])
+	{
+		if ((char)c == s[i])
+			return ((char *)(s + i));
+		i++;
+	}
+	if ((char)c == '\0')
+		return ((char *)(s + i));
+	else
+		return (NULL);
+}

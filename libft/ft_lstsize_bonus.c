@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exc.c                                              :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abenajib <abenajib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 17:32:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 23:48:53 by ymouchta         ###   ########.fr       */
+/*   Created: 2024/10/30 19:11:31 by abenajib          #+#    #+#             */
+/*   Updated: 2025/04/05 12:37:28 by abenajib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void    excution(t_exc *val)
+int	ft_lstsize(t_list *lst)
 {
-    
-    
-}
+	t_list	*p;
+	int		len;
 
+	if (lst == NULL)
+		return (0);
+	p = lst;
+	len = 0;
+	while (p != NULL)
+	{
+		p = p->next;
+		len++;
+	}
+	return (len);
+}

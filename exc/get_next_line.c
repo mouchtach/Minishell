@@ -6,11 +6,11 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 00:23:44 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 11:14:38 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/13 23:48:15 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exc.h"
+#include "../minishell.h"
 
 static char	*ft_free(char **maloc)
 {

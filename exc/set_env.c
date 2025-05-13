@@ -6,11 +6,11 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:31:10 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/12 21:10:15 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/13 23:48:34 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exc.h"
+#include "../minishell.h"
 
 static void  add_back(t_env **list,  t_env *new)
 {
