@@ -29,6 +29,7 @@ SRCS=	$(TARGET).c \
 	./exc/set_env.c \
 	./exc/set_path.c \
 	./exc/struct_cpy.c \
+	./exc/desplay_my_list.c \
 	
 
 RM = rm -rf

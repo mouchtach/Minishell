@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/14 00:35:50 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:14:09 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_cmdarg
 	bool				is_builtin;
 	int					origin_stdout;
 	int					origin_stdin;
-	t_redi_list			*input;
+	t_redi_list			*input; 
 	t_redi_list			*output;
 	struct s_cmdarg		*next;
 }						t_cmdarg;
@@ -185,7 +185,6 @@ void					ft_cleaner(t_token *token_list, t_cmdarg *cmdarg_list);
 
 typedef enum s_type 
 {
-	
   D_IN,
   D_OUT,
   D_APPEND,
@@ -233,5 +232,6 @@ char	*get_next_line(int fd);
 void   herdoc(t_exc *val);
 // STRUCT_CPY
 t_exc   *strct_copy(t_cmdarg    *old_strct, char **env);
-
+//DESPLAY
+void    desplay_my_list(t_cmd *list);
 #endif
