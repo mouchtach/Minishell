@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:14:53 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/14 13:42:12 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:11:33 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,19 @@ int	main(int ac, char **av, char **env)
 	else
 	{
 		minienv = ft_envinit(env);
-		// while (1)
-		// {
+		while (1)
+		{
 			cwd = ft_getcwd(minienv);
 			input = readline(cwd);
 			ot =  minishell(input, &minienv);
 			// htal hna khdit ghir parssing
 			var_exc = strct_copy(ot, env);
-			desplay_my_list(var_exc->list);
-			
+
+			excution(var_exc);
+			//
 			free(input);
 			free(cwd);
-		// }
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/14 10:14:09 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/16 10:00:39 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_cmdarg
 	bool				is_builtin;
 	int					origin_stdout;
 	int					origin_stdin;
-	t_redi_list			*input; 
+	t_redi_list			*input;
 	t_redi_list			*output;
 	struct s_cmdarg		*next;
 }						t_cmdarg;
@@ -183,7 +183,8 @@ void					ft_cleaner(t_token *token_list, t_cmdarg *cmdarg_list);
 # endif
 
 
-typedef enum s_type 
+
+typedef enum s_type
 {
   D_IN,
   D_OUT,
@@ -191,7 +192,7 @@ typedef enum s_type
   D_HERDOC
 }       t_type;
 
-typedef struct s_env 
+typedef struct s_env
 {
     char *key;
     char *value;
@@ -208,10 +209,14 @@ typedef struct s_redirec
 
 typedef struct s_cmd
 {
-	char			**cmd;  
+	char			**cmd;
 	t_redirec		*input;
 	t_redirec		*output;
+	int				fd_files[2];
+	int				fd_pip[2];
+	int				fd_origine[2];
 	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }						t_cmd;
 
 typedef struct s_exc
@@ -226,12 +231,17 @@ typedef struct s_exc
 t_env *set_env(char **env);
 // PATH
 char **set_path(t_env *v);
+char	*get_path_cmd(char **path, char *cmd);
 //GET_NEXT_LINE
 char	*get_next_line(int fd);
 // REDERACTION
-void   herdoc(t_exc *val);
+bool   ft_herdoc(t_exc *val);
 // STRUCT_CPY
 t_exc   *strct_copy(t_cmdarg    *old_strct, char **env);
 //DESPLAY
-void    desplay_my_list(t_cmd *list);
+void print_command_tree(t_cmd *cmd, int cmd_num);
+// EXECUTION
+void    excution(t_exc *val);
+//
+bool    redirection(t_cmd *list);
 #endif

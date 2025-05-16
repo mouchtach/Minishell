@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_path.c                                         :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:16:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 23:50:49 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/16 08:26:39 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*get_path_cmd(char **path, char *cmd)
+{
+	int		i;
+	char	*join;
+	char	*tmp;
+
+	i = 0;
+	while (path[i])
+	{
+		join = ft_strjoin("/", cmd);
+		tmp = ft_strdup(join);
+		free(join);
+		join = ft_strjoin(path[i], tmp);
+		free(tmp);
+		if (access(join, X_OK) == 0)
+			return (join);
+		i++;
+	}
+	free(join);
+	return (NULL);
+}
 
 char **set_path(t_env *v)
 {

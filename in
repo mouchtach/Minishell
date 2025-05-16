@@ -1,0 +1,20 @@
+total 280
+-rw-r--r--   1 ymouchta  candidates   2486 May 15 12:48 Makefile
+-rwxr-xr-x   1 ymouchta  candidates    454 May 16 11:47 d
+drwxr-xr-x  19 ymouchta  candidates    646 May 16 11:52 exc
+-rwxr-xr-x   1 ymouchta  candidates    299 May 16 10:10 i
+-rwxr-xr-x   1 ymouchta  candidates      0 May 16 11:53 in
+-rwxr-xr-x   1 ymouchta  candidates    598 May 16 10:22 l
+drwxr-xr-x  88 ymouchta  candidates   2992 May 16 09:46 libft
+-rwxr-xr-x   1 ymouchta  candidates  39524 May 16 11:52 minishell
+-rw-r--r--   1 ymouchta  candidates  55952 May 16 11:52 minishell.a
+-rw-r--r--   1 ymouchta  candidates   3189 May 16 11:51 minishell.c
+-rw-r--r--   1 ymouchta  candidates   6539 May 16 10:00 minishell.h
+-rw-r--r--   1 ymouchta  candidates   3220 May 16 11:52 minishell.o
+-rw-r--r--   1 ymouchta  candidates   1872 May 14 13:45 minishell_utils.c
+-rw-r--r--   1 ymouchta  candidates   2052 May 16 10:01 minishell_utils.o
+-rwxr-xr-x   1 ymouchta  candidates      0 May 16 11:47 o
+-rwxr-xr-x   1 ymouchta  candidates      0 May 16 11:48 oi
+-rwxr-xr-x   1 ymouchta  candidates    456 May 16 11:48 out
+-rwxr-xr-x   1 ymouchta  candidates      0 May 16 09:05 p
+drwxr-xr-x  32 ymouchta  candidates   1088 May 16 10:01 parsing

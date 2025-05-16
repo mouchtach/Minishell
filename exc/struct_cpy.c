@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 23:55:26 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/14 13:41:42 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/16 12:18:44 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void    add_back_rederc(t_redirec **list, t_redirec *new)
 {
-    if(!*list)
-        *list = new;
+    if (!list)
+        return;
 
-    t_redirec *tmp;
-    tmp = *list;
-    while(tmp->next)
+    if (!*list)
+    {
+        *list = new;
+        return;
+    }
+
+    t_redirec *tmp = *list;
+    while (tmp->next)
         tmp = tmp->next;
     tmp->next = new;
     new->next = NULL;
@@ -28,14 +33,17 @@ void    add_back_rederc(t_redirec **list, t_redirec *new)
 void    add_back_cmd(t_cmd **list, t_cmd *new)
 {
     if(!*list)
+    {
         *list = new;
-
+        return ;
+    }
     t_cmd *tmp;
     tmp = *list;
     while(tmp->next)
         tmp = tmp->next;
     tmp->next = new;
     new->next = NULL;
+    new->prev = tmp;
 }
 
 
@@ -65,6 +73,7 @@ t_cmd *creat_new_cmd(t_cmdarg *old_strct, t_redirec *my_in_list, t_redirec *my_o
     new->input = my_in_list;
     new->output = my_out_list;
     new->next = NULL;
+    new->prev = NULL;
     return(new);
 }
 void desplay_this_node(t_cmd *list)
@@ -127,7 +136,6 @@ t_exc   *strct_copy(t_cmdarg    *old_strct, char **env)
 {
     t_exc *var;
 
-    
     var = malloc(sizeof(t_exc));
     var->list = set_strct(old_strct);
     var->env = set_env(env);

@@ -26,11 +26,12 @@ SRCS=	$(TARGET).c \
 	./parsing/redirection.c \
 	./exc/get_next_line.c \
 	./exc/heredoc.c \
+	./exc/exc.c \
 	./exc/set_env.c \
-	./exc/set_path.c \
+	./exc/path.c \
 	./exc/struct_cpy.c \
 	./exc/desplay_my_list.c \
-	
+	./exc/exc_redirection.c  \
 
 RM = rm -rf
 NAME = $(TARGET).a
