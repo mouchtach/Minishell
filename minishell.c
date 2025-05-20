@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:14:53 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/18 17:37:36 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:26:38 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,9 @@ int	main(int ac, char **av, char **env)
 			ot =  minishell(input, &minienv);
 			// htal hna khdit ghir parssing
 			var_exc = strct_copy(ot, env);
+			// print_command_tree();
+			start_execution(var_exc);
 
-			ft_excution(var_exc);
 			//
 			free(input);
 			free(cwd);

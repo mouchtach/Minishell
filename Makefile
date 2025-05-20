@@ -27,6 +27,7 @@ SRCS=	$(TARGET).c \
 	./exc/get_next_line.c \
 	./exc/heredoc.c \
 	./exc/exc.c \
+	./exc/test.c \
 	./exc/set_env.c \
 	./exc/path.c \
 	./exc/struct_cpy.c \

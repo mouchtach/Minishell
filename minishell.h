@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/18 18:28:35 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:56:58 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ typedef struct s_exc
   t_cmd *list;
   t_env *env;
   char **path;
+  int std_backup[2];
 
 }   t_exc;
 
@@ -242,7 +243,8 @@ t_exc   *strct_copy(t_cmdarg    *old_strct, char **env);
 //DESPLAY
 void print_command_tree(t_cmd *cmd, int cmd_num);
 // EXECUTION
-void    ft_excution(t_exc *val);
+// void    ft_excution(t_exc *val);
+void    start_execution(t_exc *val);
 //
 bool    redirection(t_cmd *list);
 #endif
