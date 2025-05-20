@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 09:52:20 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/16 10:03:31 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:27:06 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void print_command_tree(t_cmd *cmd, int cmd_num) {
            TREE_END, COLOR_FD, COLOR_RESET);
     printf("%s   %sfiles:%s %d,%d\n",
            TREE_INDENT, COLOR_FD, COLOR_RESET,
-           cmd->fd_files[0], cmd->fd_files[1]);
+           cmd->fd_io[0], cmd->fd_io[1]);
     printf("%s   %spipe:%s %d,%d\n",
            TREE_INDENT, COLOR_FD, COLOR_RESET,
            cmd->fd_pip[0], cmd->fd_pip[1]);

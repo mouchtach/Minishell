@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/16 10:00:39 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:28:35 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,9 +210,10 @@ typedef struct s_redirec
 typedef struct s_cmd
 {
 	char			**cmd;
+	t_redirec		*redc;
 	t_redirec		*input;
 	t_redirec		*output;
-	int				fd_files[2];
+	int				fd_io[2];
 	int				fd_pip[2];
 	int				fd_origine[2];
 	struct s_cmd	*next;
@@ -241,7 +242,7 @@ t_exc   *strct_copy(t_cmdarg    *old_strct, char **env);
 //DESPLAY
 void print_command_tree(t_cmd *cmd, int cmd_num);
 // EXECUTION
-void    excution(t_exc *val);
+void    ft_excution(t_exc *val);
 //
 bool    redirection(t_cmd *list);
 #endif

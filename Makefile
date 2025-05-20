@@ -1,6 +1,6 @@
 TARGET = minishell
 CC = clang
-CFLAGS =  -Wunreachable-code -I/usr/include
+# CFLAGS =  -Wunreachable-code -I/usr/include
 MINIFLAGS = -lreadline -L/usr/lib/x86_64-linux-gnu
 
 # READLINE = $(shell brew --prefix readline)
