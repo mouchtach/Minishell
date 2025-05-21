@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:45 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/09 11:43:49 by codespace        ###   ########.fr       */
+/*   Updated: 2025/05/21 13:16:43 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char	*ft_getcwd(t_list *env)
 
 	cwd = ft_get_pwd(env);
 	if (cwd && ft_strncmp(cwd, getenv("HOME"), ft_strlen(getenv("HOME"))) == 0)
-		prompt = ft_strjoin("[~", cwd + ft_strlen(getenv("HOME")));
+		prompt = ft_strjoin("\033[1;34m[\033[0m\033[1;32m~", cwd + ft_strlen(getenv("HOME")));
 	else
-		prompt = ft_strjoin("[", cwd);
+		prompt = ft_strjoin("\033[1;34m[\033[0m", cwd);
 	free(cwd);
 	tmp = prompt;
-	prompt = ft_strjoin(prompt, "]\n$> ");
+	prompt = ft_strjoin(prompt, "\033[0m\033[1;34m]\n$>\033[0m ");
 	free(tmp);
 	return (prompt);
 }

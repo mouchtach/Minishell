@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/20 16:56:58 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:00:44 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 //----colors
 # define RED "\033[0;31m"
-# define GREEN "\033[0;32m"
-# define YELLOW "\033[0;33m"
+# define GREEN "\033[1;32m"
+# define YELLOW "\033[1;33m"
 # define BLUE "\033[0;34m"
 # define MAGENTA "\033[0;35m"
 # define CYAN "\033[0;36m"
@@ -176,13 +176,11 @@ bool					ft_pipeerrors(t_token *current);
 void					ft_cleaner(t_token *token_list, t_cmdarg *cmdarg_list);
 
 
-//excution
+//EXECUTION
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
 # endif
-
-
 
 typedef enum s_type
 {
@@ -213,9 +211,9 @@ typedef struct s_cmd
 	t_redirec		*redc;
 	t_redirec		*input;
 	t_redirec		*output;
+	int				fd_herdoc[2];
 	int				fd_io[2];
 	int				fd_pip[2];
-	int				fd_origine[2];
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }						t_cmd;
@@ -229,22 +227,13 @@ typedef struct s_exc
 
 }   t_exc;
 
-// ENV
-t_env *set_env(char **env);
-// PATH
-char **set_path(t_env *v);
+
+t_env	*set_env(char **env);
+char	**set_path(t_env *v);
 char	*get_path_cmd(char **path, char *cmd);
-//GET_NEXT_LINE
 char	*get_next_line(int fd);
-// REDERACTION
-bool   ft_herdoc(t_exc *val);
-// STRUCT_CPY
+bool	ft_herdoc(t_exc *val);
 t_exc   *strct_copy(t_cmdarg    *old_strct, char **env);
-//DESPLAY
-void print_command_tree(t_cmd *cmd, int cmd_num);
-// EXECUTION
-// void    ft_excution(t_exc *val);
 void    start_execution(t_exc *val);
-//
-bool    redirection(t_cmd *list);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:14:53 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/20 15:26:38 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:07:14 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	main(int ac, char **av, char **env)
 		while (1)
 		{
 			cwd = ft_getcwd(minienv);
+			// printf("%s%s%s%s:~$ %s",YELLOW, getenv("HOME"), RESET, GREEN, RESET);
 			input = readline(cwd);
 			ot =  minishell(input, &minienv);
 			// htal hna khdit ghir parssing

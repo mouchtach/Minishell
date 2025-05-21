@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 23:55:26 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/16 12:18:44 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:58:24 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ t_cmd *creat_new_cmd(t_cmdarg *old_strct, t_redirec *my_in_list, t_redirec *my_o
     new->cmd = old_strct->cmd;
     new->input = my_in_list;
     new->output = my_out_list;
+    new->fd_herdoc[0] = -1;
+    new->fd_herdoc[1] = -1;
+    new->fd_pip[0] = -1;
+    new->fd_pip[1] = -1;
+    new->fd_io[0] = STDIN_FILENO;
+    new->fd_io[1] = STDOUT_FILENO;
     new->next = NULL;
     new->prev = NULL;
     return(new);
@@ -107,8 +113,8 @@ t_cmd *set_strct(t_cmdarg *old_strct)
     t_redirec *my_out_list = NULL;
     t_redi_list *redrc_in;
     t_redi_list *redrc_out;
-
     t_redi_list *tmp;
+    
     while(old_strct)
     {
         tmp = old_strct->input;

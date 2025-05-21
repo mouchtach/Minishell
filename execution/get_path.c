@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:50:09 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/20 17:51:32 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:49:36 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*get_path_cmd(char **path, char *cmd)
 		i++;
 	}
 	free(join);
+	printf("%s : command not found\n", cmd);
 	return (NULL);
 }
 
