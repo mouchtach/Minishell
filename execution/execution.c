@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:52:21 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/21 15:46:35 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/25 09:46:11 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void    start_execution(t_exc *val)
     int i = 1;
     ft_herdoc(val);  
     init_shell_fds(val);
+    // built_in_function(list);
     while(list)
     {
         if(list->next)

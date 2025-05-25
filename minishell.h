@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/21 16:00:44 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/25 09:45:28 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,4 +236,7 @@ bool	ft_herdoc(t_exc *val);
 t_exc   *strct_copy(t_cmdarg    *old_strct, char **env);
 void    start_execution(t_exc *val);
 
+
+//built_in
+void    built_in_function(char **cmd);
 #endif

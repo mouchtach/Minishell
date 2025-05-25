@@ -30,6 +30,8 @@ SRCS=	$(TARGET).c \
 	./execution/set_env.c \
 	./execution/heredoc.c \
 	./execution/struct_cpy.c \
+	./execution/built_in.c \
+	
 
 RM = rm -rf
 NAME = $(TARGET).a

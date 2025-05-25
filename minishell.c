@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:14:53 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/21 13:07:14 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/25 09:51:14 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,9 @@ int	main(int ac, char **av, char **env)
 			// htal hna khdit ghir parssing
 			var_exc = strct_copy(ot, env);
 			// print_command_tree();
-			start_execution(var_exc);
+    		built_in_function(var_exc->list->cmd);
+
+			// start_execution(var_exc);
 
 			//
 			free(input);
