@@ -6,7 +6,7 @@
 /*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/25 09:45:28 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/26 16:29:54 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,5 +238,5 @@ void    start_execution(t_exc *val);
 
 
 //built_in
-void    built_in_function(char **cmd);
+void    built_in_function(char **cmd, t_exc *var);
 #endif

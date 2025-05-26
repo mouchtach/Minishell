@@ -6,7 +6,7 @@
 /*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:14:53 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/25 09:51:14 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/25 21:54:42 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	main(int ac, char **av, char **env)
 			// htal hna khdit ghir parssing
 			var_exc = strct_copy(ot, env);
 			// print_command_tree();
-    		built_in_function(var_exc->list->cmd);
+    		built_in_function(var_exc->list->cmd, var_exc);
 
 			// start_execution(var_exc);
 
