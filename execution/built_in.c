@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/05/26 16:32:49 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/27 10:19:52 by mouchtach        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,51 @@ void    ft_env(t_env *env)
     }
 }
 
+void    ft_copy_sorted_env(t_env *env)
+{
+    t_env *tmp;
+    t_env *old;
+    t_env *small;
+    
+    int len  = ft_lstsize_env(env);
+    // printf("%d\n", len);
+    tmp = env;
+    while(tmp)
+    {
+        if(ft_strcmp(small->key, tmp->key) > 0)
+        {
+            
+        }
+
+    }
+    while(len--)
+    {
+        tmp = env;
+        small = env;
+        printf("old = %s\n", old->key);
+        while(tmp)
+        {
+            if(ft_strcmp(small->key, tmp->key) > 0)
+                small = tmp;
+            tmp = tmp->next;
+        }
+        printf("%s\n", small->key);
+        old = small;
+        
+    }
+
+    
+}
+
+
+// void    ft_export(t_env *env)
+// {
+//     t_env *sort;
+
+//     ft_copy_sorted_env(env);
+    
+// }
+
 void    built_in_function(char **cmd, t_exc *var)
 {
     if(ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "ECHO")  == 0)
@@ -83,7 +128,11 @@ void    built_in_function(char **cmd, t_exc *var)
         ft_pwd(var);
     if(ft_strcmp(cmd[0], "env") == 0 || ft_strcmp(cmd[0], "ENV")  == 0)
         ft_env(var->env);
-    // if(ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "EXPORT")  == 0)
-    //     ft_export(var);
+    if(ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "EXPORT")  == 0)
+    {
+        printf("done\n");   
+        ft_copy_sorted_env(var->env);
+    }
+        
 
 }

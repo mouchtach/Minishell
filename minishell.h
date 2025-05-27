@@ -6,7 +6,7 @@
 /*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/26 16:29:54 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/26 20:47:55 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ typedef struct s_exc
 
 }   t_exc;
 
-
 t_env	*set_env(char **env);
 char	**set_path(t_env *v);
 char	*get_path_cmd(char **path, char *cmd);
@@ -239,4 +238,5 @@ void    start_execution(t_exc *val);
 
 //built_in
 void    built_in_function(char **cmd, t_exc *var);
+int	ft_lstsize_env(t_env *lst);
 #endif

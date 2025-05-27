@@ -3,16 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:31:10 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 23:48:34 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/26 20:47:43 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+int	ft_lstsize_env(t_env *lst)
+{
+	t_env	*p;
+	int		len;
 
-static void  add_back(t_env **list,  t_env *new)
+	if (lst == NULL)
+		return (0);
+	p = lst;
+	len = 0;
+	while (p != NULL)
+	{
+		p = p->next;
+		len++;
+	}
+	return (len);
+}
+
+
+void  add_back_env(t_env **list,  t_env *new)
 {
     if(!list)
         return ;
@@ -27,7 +44,7 @@ static void  add_back(t_env **list,  t_env *new)
     tmp->next = new; 
 }
 
-static t_env   *creat_new(char *value , char *key)
+t_env   *creat_new_env(char *value , char *key)
 {
     t_env *new;
 
@@ -55,7 +72,7 @@ t_env *set_env(char **env)
             j++;
         value = ft_substr(env[i], j + 1 , ft_strlen(env[i]) - j);
         key = ft_substr(env[i], 0, j);
-        add_back(&v, creat_new(value, key));
+        add_back_env(&v, creat_new_env(value, key));
         free(value);
         free(key);
         i++;
