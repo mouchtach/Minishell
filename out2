@@ -1,0 +1,20 @@
+total 184
+drwxr-xr-x  19 ymouchta  candidates    646 May 24 20:06 .
+drwxr-xr-x   8 ymouchta  candidates    272 May 20 18:55 ..
+drwxr-xr-x  15 ymouchta  candidates    510 May 21 18:31 .git
+-rw-r--r--   1 ymouchta  candidates    430 May 20 14:45 .gitignore
+drwxr-xr-x   3 ymouchta  candidates    102 May 20 14:45 .vscode
+-rw-r--r--   1 ymouchta  candidates   3349 May 21 18:31 Makefile
+drwxr-xr-x  14 ymouchta  candidates    476 May 21 18:31 execution
+-rw-r--r--   1 ymouchta  candidates      0 May 21 18:37 i
+drwxr-xr-x  88 ymouchta  candidates   2992 May 20 19:08 libft
+-rw-r--r--   1 ymouchta  candidates  55824 May 20 19:08 minishell.a
+-rw-r--r--   1 ymouchta  candidates   3301 May 21 18:31 minishell.c
+-rw-r--r--   1 ymouchta  candidates   6411 May 21 18:31 minishell.h
+-rw-r--r--   1 ymouchta  candidates   3228 May 20 19:08 minishell.o
+-rw-r--r--   1 ymouchta  candidates   1872 May 20 14:45 minishell_utils.c
+-rw-r--r--   1 ymouchta  candidates   2052 May 20 19:08 minishell_utils.o
+-rw-r--r--   1 ymouchta  candidates     20 May 21 18:38 o
+-rw-r--r--   1 ymouchta  candidates      0 May 24 20:06 out
+-rw-r--r--   1 ymouchta  candidates      0 May 24 20:06 out2
+drwxr-xr-x  32 ymouchta  candidates   1088 May 21 18:31 parsing

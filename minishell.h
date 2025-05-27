@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/26 20:47:55 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/27 11:15:52 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ typedef struct s_env
     char *key;
     char *value;
     struct s_env *next;
+    struct s_env *prev;
 }       t_env;
 
 typedef struct s_redirec
@@ -238,5 +239,7 @@ void    start_execution(t_exc *val);
 
 //built_in
 void    built_in_function(char **cmd, t_exc *var);
-int	ft_lstsize_env(t_env *lst);
+int		ft_lstsize_env(t_env *lst);
+t_env   *creat_new_env(char *value , char *key);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:31:10 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/26 20:47:43 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/27 11:20:19 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void  add_back_env(t_env **list,  t_env *new)
 {
     if(!list)
         return ;
-    if(!(* list ))
+    if(!(* list))
     {
         (* list) = new; 
         return;
@@ -41,6 +41,7 @@ void  add_back_env(t_env **list,  t_env *new)
     t_env *tmp = * list;
     while(tmp->next)
         tmp = tmp->next;
+    new->prev = tmp;
     tmp->next = new; 
 }
 
@@ -53,6 +54,7 @@ t_env   *creat_new_env(char *value , char *key)
     new->key = ft_strdup(key);
     new->value = ft_strdup(value);
     new->next = NULL;
+    new->prev = NULL;
     return(new);
 }
 

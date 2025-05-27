@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/05/27 10:19:52 by mouchtach        ###   ########.fr       */
+/*   Updated: 2025/05/27 11:03:50 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,51 +74,36 @@ void    ft_env(t_env *env)
         tmp = tmp->next;
     }
 }
-
-void    ft_copy_sorted_env(t_env *env)
+void  ft_sort_env(t_env **list)
 {
-    t_env *tmp;
-    t_env *old;
-    t_env *small;
-    
-    int len  = ft_lstsize_env(env);
-    // printf("%d\n", len);
-    tmp = env;
-    while(tmp)
-    {
-        if(ft_strcmp(small->key, tmp->key) > 0)
-        {
-            
-        }
 
-    }
-    while(len--)
-    {
-        tmp = env;
-        small = env;
-        printf("old = %s\n", old->key);
-        while(tmp)
-        {
-            if(ft_strcmp(small->key, tmp->key) > 0)
-                small = tmp;
-            tmp = tmp->next;
-        }
-        printf("%s\n", small->key);
-        old = small;
-        
-    }
 
-    
+}
+
+t_env *ft_copy_env(t_env *env)
+{
+    t_env *list;
+    t_env *new = NULL;
+
+    list = env;
+
+    while(list)
+    {
+        add_back_env(&new, creat_new_env(list->value, list->key));
+        list = list->next;
+    }
+    return(new);
 }
 
 
-// void    ft_export(t_env *env)
-// {
-//     t_env *sort;
+void    ft_export(t_env *env)
+{
+    t_env *new;
 
-//     ft_copy_sorted_env(env);
+    new = ft_copy_env(env);
+    ft_sort_env(&new);
     
-// }
+}
 
 void    built_in_function(char **cmd, t_exc *var)
 {
