@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:17:15 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/27 11:15:52 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:02:10 by mouchtach        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <curses.h>
+// # include <direct.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -222,24 +223,26 @@ typedef struct s_cmd
 typedef struct s_exc
 {
   t_cmd *list;
-  t_env *env;
+  t_list *env;
   char **path;
   int std_backup[2];
 
 }   t_exc;
 
-t_env	*set_env(char **env);
-char	**set_path(t_env *v);
+// t_list	*set_env(t_list *env);
+char	**set_path(t_list *v);
 char	*get_path_cmd(char **path, char *cmd);
 char	*get_next_line(int fd);
 bool	ft_herdoc(t_exc *val);
-t_exc   *strct_copy(t_cmdarg    *old_strct, char **env);
+t_exc   *strct_copy(t_cmdarg    *old_strct, t_list *env);
 void    start_execution(t_exc *val);
 
 
 //built_in
 void    built_in_function(char **cmd, t_exc *var);
-int		ft_lstsize_env(t_env *lst);
-t_env   *creat_new_env(char *value , char *key);
+// int		ft_lstsize_env(t_env *lst);
+t_list   *creat_new_env(char *value , char *key);
+void 	add_back_env(t_list **list,  t_list *new);
+t_list   *creat_new_env(char *value , char *key);
 
 #endif

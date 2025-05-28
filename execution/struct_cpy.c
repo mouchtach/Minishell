@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_cpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 23:55:26 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/21 15:58:24 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:59:39 by mouchtach        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +138,15 @@ t_cmd *set_strct(t_cmdarg *old_strct)
     return(list);
 }
 
-t_exc   *strct_copy(t_cmdarg    *old_strct, char **env)
+t_exc   *strct_copy(t_cmdarg    *old_strct, t_list *env)
 {
     t_exc *var;
 
     var = malloc(sizeof(t_exc));
     var->list = set_strct(old_strct);
-    var->env = set_env(env);
-    var->path = set_path(var->env);
+    var->env = env;
+    // var->env = set_env(env);
+    var->path = set_path(env);
 
     return (var);
 }

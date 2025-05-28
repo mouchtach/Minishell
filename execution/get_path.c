@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:50:09 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/24 22:38:24 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/28 11:58:13 by mouchtach        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ char	*get_path_cmd(char **path, char *cmd)
 	return (NULL);
 }
 
-char **set_path(t_env *v)
+char **set_path(t_list *v)
 {
-    t_env *tmp;
+    t_list *tmp;
 
     tmp = v;
     if(!tmp)

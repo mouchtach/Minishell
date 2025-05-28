@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/05/27 11:03:50 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:00:55 by mouchtach        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void    ft_echo(char **cmd) // echo -n
 
 void    ft_pwd(t_exc *var)
 {
-    t_env *env;
+    t_list *env;
     env = var->env;
     while (env)
     {
@@ -63,9 +63,9 @@ void    ft_pwd(t_exc *var)
     }
 }
 
-void    ft_env(t_env *env)
+void    ft_env(t_list *env)
 {
-    t_env *tmp;
+    t_list *tmp;
     
     tmp = env;
     while(tmp)
@@ -74,16 +74,21 @@ void    ft_env(t_env *env)
         tmp = tmp->next;
     }
 }
-void  ft_sort_env(t_env **list)
+
+
+void    desplay_list(t_list *list)
 {
-
-
+    while(list)
+    {
+        printf("key = %s, value = %s\n", list->key, list->value);
+        list = list->next;
+    }
 }
 
-t_env *ft_copy_env(t_env *env)
+t_list *ft_copy_env(t_list *env)
 {
-    t_env *list;
-    t_env *new = NULL;
+    t_list *list;
+    t_list *new = NULL;
 
     list = env;
 
@@ -96,13 +101,57 @@ t_env *ft_copy_env(t_env *env)
 }
 
 
-void    ft_export(t_env *env)
+void    ft_export(t_list *env)
 {
-    t_env *new;
+    t_list *new = NULL;
 
     new = ft_copy_env(env);
-    ft_sort_env(&new);
+    desplay_list(new);
+    // ft_swap(&new, "PATH", "PWD");
+    printf("\nAfter swapping:\n");
+    desplay_list(new);
+
+    // ft_sort_env(&new);
     
+}
+
+
+void    ft_cd(t_list *env, char *path)
+{
+    if(!path)
+        return;
+    char *buffer;
+    buffer = getcwd(NULL, 0);
+    if(buffer == NULL)
+    {
+        perror("getcwd");
+        return ;
+    }
+    if(chdir(path) == -1)
+    {
+        perror("cd");
+        return ;
+    }
+    t_list *tmp;
+    tmp = env;
+    while(tmp)
+    {
+        if(ft_strcmp(tmp->key, "PWD") == 0)
+        {
+            printf("Changing directory to: %s\n", path);
+            free(tmp->value);
+            tmp->value = ft_strdup(path);
+        }
+        else if(ft_strcmp(tmp->key, "OLDPWD") == 0)
+        {
+            printf("Changing OLDPWD to: %s\n", buffer);
+            free(tmp->value);
+            tmp->value = ft_strdup(buffer);
+        }
+        tmp = tmp->next;
+    }
+    desplay_list(env);
+    free(buffer);
 }
 
 void    built_in_function(char **cmd, t_exc *var)
@@ -115,9 +164,10 @@ void    built_in_function(char **cmd, t_exc *var)
         ft_env(var->env);
     if(ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "EXPORT")  == 0)
     {
-        printf("done\n");   
-        ft_copy_sorted_env(var->env);
+        ft_export(var->env);
     }
+    
+    if(ft_strcmp(cmd[0], "cd") == 0 || ft_strcmp(cmd[0], "CD")  == 0)
+        ft_cd(var->env, cmd[1]);
         
-
 }

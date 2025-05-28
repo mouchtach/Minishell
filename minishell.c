@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 12:14:53 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/25 21:54:42 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/27 17:31:46 by mouchtach        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,12 @@ int	main(int ac, char **av, char **env)
 		while (1)
 		{
 			cwd = ft_getcwd(minienv);
-			// printf("%s%s%s%s:~$ %s",YELLOW, getenv("HOME"), RESET, GREEN, RESET);
 			input = readline(cwd);
 			ot =  minishell(input, &minienv);
-			// htal hna khdit ghir parssing
-			var_exc = strct_copy(ot, env);
-			// print_command_tree();
+			
+			var_exc = strct_copy(ot, minienv);
     		built_in_function(var_exc->list->cmd, var_exc);
 
-			// start_execution(var_exc);
-
-			//
 			free(input);
 			free(cwd);
 		}
