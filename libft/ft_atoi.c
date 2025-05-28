@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abenajib <abenajib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 20:04:35 by abenajib          #+#    #+#             */
-/*   Updated: 2025/04/05 12:37:28 by abenajib         ###   ########.fr       */
+/*   Created: 2024/10/23 18:46:29 by azmakhlo          #+#    #+#             */
+/*   Updated: 2024/11/13 16:02:55 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,27 @@
 int	ft_atoi(const char *str)
 {
 	int					sign;
-	unsigned long long	result;
+	size_t				i;
+	unsigned long long	r;
 
 	sign = 1;
-	result = 0;
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-' || *str == '+')
+	i = 0;
+	r = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (*str == '-')
+		if (str[i] == '-')
 			sign = -1;
-		str++;
+		i++;
 	}
-	while (*str >= '0' && *str <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (*str - '0');
-		str++;
-		if (sign == 1 && result > (9223372036854775807))
+		r = r * 10 + (str[i++] - 48);
+		if (r > 9223372036854775807 && sign == 1)
 			return (-1);
-		else if (sign == -1 && result > (9223372036854775807))
+		if (r > 9223372036854775807 && sign == -1)
 			return (0);
 	}
-	return ((int)(result * sign));
+	return ((int)(r * sign));
 }
-// #include <stdio.h>
-// #include <xlocale.h>
-// int main()
-// {
-// 	char s[] = "2233720368547758085555555555";
-// 	int a = ft_atoi(s);
-// 	int at = atoi(s);
-// 	if (a == at)
-// 		printf("test pass");
-// 	else
-// 		printf("atoi:%d\nft_atoi:%d\n", at, a);
-// }

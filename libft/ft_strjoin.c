@@ -3,89 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abenajib <abenajib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 18:28:38 by abenajib          #+#    #+#             */
-/*   Updated: 2025/04/05 15:48:59 by abenajib         ###   ########.fr       */
+/*   Created: 2024/10/27 17:06:02 by azmakhlo          #+#    #+#             */
+/*   Updated: 2024/11/17 22:03:10 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_check_path(char **paths, char *cmd)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*full_path;
-	char	*path;
-
-	path = ft_strjoin(*paths, "/");
-	full_path = ft_strjoin(path, cmd);
-	free(path);
-	if (access(full_path, X_OK) == 0)
-		return (full_path);
-	free(full_path);
-	return (NULL);
-}
-
-char	*ft_path_checker(char *cmd)
-{
-	if (access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
-	return (NULL);
-}
-
-char	*ft_find_path(char *cmd, char *envp[])
-{
-	char	**paths;
-	int		i;
-	char	*checker;
-	char	**holder;
-
-	i = -1;
-	if (ft_strchr(cmd, '/'))
-		return (ft_path_checker(cmd));
-	while (envp[++i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			paths = ft_split(envp[i] + 5, ":");
-			holder = paths;
-			while (*paths)
-			{
-				checker = ft_check_path(paths++, cmd);
-				if (checker)
-					return (checker);
-			}
-			freeall(holder, countwords(envp[i] + 5, ":"));
-			break ;
-		}
-	}
-	return (NULL);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*str;
+	char	*p;
+	int		len_s;
 	int		i;
 	int		j;
 
 	if (!s1 && !s2)
 		return (NULL);
-	if (!s1 && s2)
+	if (!s1)
 		return (ft_strdup(s2));
-	if (s1 && !s2)
+	if (!s2)
 		return (ft_strdup(s1));
-	i = 0;
-	j = 0;
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
+	len_s = ft_strlen(s1) + ft_strlen(s2);
+	p = (char *)malloc((sizeof(char) * len_s) + 1);
+	if (!p)
 		return (NULL);
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
+	i = -1;
+	while (s1[++i])
+		p[i] = s1[i];
+	j = 0;
 	while (s2[j])
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	return (str);
+		p[i++] = s2[j++];
+	p[i] = '\0';
+	return (p);
 }

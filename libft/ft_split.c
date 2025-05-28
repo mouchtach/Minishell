@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 20:49:38 by abenajib          #+#    #+#             */
-/*   Updated: 2025/05/08 00:02:15 by codespace        ###   ########.fr       */
+/*   Created: 2024/10/27 22:08:08 by azmakhlo          #+#    #+#             */
+/*   Updated: 2024/11/09 12:44:57 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	countwords(const char *s, char *c)
+static size_t	counts(const char *s, char c)
 {
 	size_t	i;
 	size_t	count;
@@ -21,25 +21,22 @@ size_t	countwords(const char *s, char *c)
 	count = 0;
 	while (s[i])
 	{
-		if (ft_strchr(c, s[i]) == NULL
-			&& (i == 0 || ft_strchr(c, s[i - 1]) != NULL))
-		{
+		if (s[i] != c && (i == 0 || s[i - 1] == c))
 			count++;
-		}
 		i++;
 	}
 	return (count);
 }
 
-char	**freeall(char **p, size_t x)
+static char	**shorten(char **p, size_t x)
 {
 	while (x > 0)
-		free(p[--x]);
-	free(p);
+		free (p[--x]);
+	free (p);
 	return (NULL);
 }
 
-static char	**copywords(char **p, const char *s, char *c)
+static char	**shoten2(char **p, const char *s, char c)
 {
 	size_t	i;
 	size_t	start;
@@ -47,31 +44,31 @@ static char	**copywords(char **p, const char *s, char *c)
 
 	i = 0;
 	x = 0;
-	while (s[i] && x < countwords(s, c))
+	while (s[i] && x < counts (s, c))
 	{
-		while (ft_strchr(c, s[i]) != NULL)
+		while (s[i] == c)
 			i++;
 		start = i;
-		while (s[i] && ft_strchr(c, s[i]) == NULL)
+		while (s[i] && s[i] != c)
 			i++;
 		p[x++] = ft_substr(s, start, i - start);
 		if (!p[x - 1])
-			return (freeall(p, x));
+			return (shorten(p, x));
 	}
 	p[x] = NULL;
 	return (p);
 }
 
-char	**ft_split(const char *s, char *c)
+char	**ft_split(const char *s, char c)
 {
 	size_t	count;
 	char	**p;
 
 	if (!s)
 		return (NULL);
-	count = countwords(s, c);
+	count = counts(s, c);
 	p = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!p)
 		return (NULL);
-	return (copywords(p, s, c));
+	return (shoten2(p, s, c));
 }

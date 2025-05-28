@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/05/28 16:14:17 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:12:09 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void    ft_echo(char **cmd) // echo -n
 }
 
 
-void    ft_pwd(t_exc *var)
+void    ft_pwd(t_shell *var)
 {
     t_list *env;
     env = var->env;
@@ -63,7 +63,7 @@ void    ft_pwd(t_exc *var)
     }
 }
 
-void    ft_env(t_list *env)
+void    ft_list(t_list *env)
 {
     t_list *tmp;
     
@@ -111,7 +111,7 @@ void    ft_export(t_list *env)
     printf("\nAfter swapping:\n");
     desplay_list(new);
 
-    // ft_sort_env(&new);
+    // ft_sort_list(&new);
     
 }
 void    update_env(char *key, char *value, t_list *env)
@@ -180,14 +180,14 @@ void    ft_cd(t_list *env, char *path)
     free(oldpwd);
 }
 
-void    built_in_function(char **cmd, t_exc *var)
+void    built_in_function(char **cmd, t_shell *var)
 {
     if(ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "ECHO")  == 0)
         ft_echo(cmd);
     if(ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "PWD")  == 0)
         ft_pwd(var);
     if(ft_strcmp(cmd[0], "env") == 0 || ft_strcmp(cmd[0], "ENV")  == 0)
-        ft_env(var->env);
+        ft_list(var->env);
     if(ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "EXPORT")  == 0)
         ft_export(var->env);
     if(ft_strcmp(cmd[0], "cd") == 0 || ft_strcmp(cmd[0], "CD")  == 0)

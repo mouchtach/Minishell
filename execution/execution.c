@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:52:21 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/25 09:46:11 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/28 21:14:07 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void init_shell_fds(t_exc *shell)
+void init_shell_fds(t_shell *shell)
 {
     shell->std_backup[0] = dup(STDIN_FILENO);   // Backup stdin
     shell->std_backup[1] = dup(STDOUT_FILENO);  // Backup stdout
@@ -22,13 +22,13 @@ void init_shell_fds(t_exc *shell)
     }
 }
 
-void cleanup_shell_fds(t_exc *shell)
+void cleanup_shell_fds(t_shell *shell)
 {
     close(shell->std_backup[0]);
     close(shell->std_backup[1]);
 }
 
-void reset_stdin(t_exc *shell)
+void reset_stdin(t_shell *shell)
 {
     if (dup2(shell->std_backup[0], STDIN_FILENO) == -1)
         perror("minishell: stdin reset failed");
@@ -38,15 +38,19 @@ void reset_stdin(t_exc *shell)
 
 bool    set_input(t_cmd *command, t_redirec *in)
 {
+    
     if(command->fd_io[0] != STDIN_FILENO)
         close(command->fd_io[0]);
-    if(in->type == D_IN)
+    if(in->type == D_INFILE)
     {
         command->fd_io[0] = open(in->name , O_RDONLY , 0777);
         if(command->fd_io[0] == -1)
             return(perror(in->name), false);
     }
     else
+    {
+        
+    }
         command->fd_io[0] = command->fd_herdoc[0];
     return (true);
 }
@@ -55,7 +59,7 @@ bool    set_output(t_cmd *command, t_redirec *out)
 {
     if(command->fd_io[1] != STDOUT_FILENO)
         close(command->fd_io[1]);
-    if(out->type == D_OUT)
+    if(out->type == D_OUTFILE)
     {
         command->fd_io[1] = open(out->name , O_CREAT | O_TRUNC | O_RDWR , 0777);
         if(command->fd_io[1] == -1)
@@ -74,13 +78,20 @@ bool    set_redirection(t_cmd *command) // this fuction for list redirection in 
 {
 
     t_redirec *tmp;
-    tmp = command->redc;
+    tmp = command->redirec;
+    
+    command->fd_io[0] = STDIN_FILENO; // Default input
+    command->fd_io[1] = STDOUT_FILENO; // Default output
+    // command->fd_herdoc[0] = -1; // Default herdoc fd
+    // command->fd_herdoc[1] = -1; // Default herdoc fd
+    // command->fd_pip[0] = -1; // Default pipe read end
+    // command->fd_pip[1] = -1; // Default pipe read end
     while(tmp)
     {
-        if(tmp->type == D_IN || tmp->type == D_HERDOC)
+        if(tmp->type == D_INFILE || tmp->type == D_HERDOC)
             if(!set_input(command, tmp))
                 return(false);
-        if(tmp->type == D_OUT || tmp->type == D_APPEND)
+        if(tmp->type == D_OUTFILE || tmp->type == D_APPEND)
             if(!set_output(command, tmp))
                 return(false);
         tmp = tmp->next;
@@ -88,27 +99,27 @@ bool    set_redirection(t_cmd *command) // this fuction for list redirection in 
     return (true);
 }
 
-bool    set_set_red(t_cmd *command) // this fuction for  tow list in_list and out_list
-{
+// bool    set_set_red(t_cmd *command) // this fuction for  tow list in_list and out_list
+// {
 
-    t_redirec *tmp;
+//     t_redirec *tmp;
     
-    tmp = command->input;
-    while(tmp)
-    {
-        if(!set_input(command, tmp))
-            return(false);
-        tmp = tmp->next;
-    }
-    tmp = command->output;
-    while(tmp)
-    {
-        if(!set_output(command, tmp))
-            return(false);
-        tmp = tmp->next;
-    }
-    return(true);
-}
+//     tmp = command->input;
+//     while(tmp)
+//     {
+//         if(!set_input(command, tmp))
+//             return(false);
+//         tmp = tmp->next;
+//     }
+//     tmp = command->output;
+//     while(tmp)
+//     {
+//         if(!set_output(command, tmp))
+//             return(false);
+//         tmp = tmp->next;
+//     }
+//     return(true);
+// }
 
 bool    set_pip(t_cmd *command)
 {
@@ -124,11 +135,11 @@ bool    set_pip(t_cmd *command)
     return (true);
 }
 
-void    child_process(t_exc *val, t_cmd *cmd)
+void    child_process(t_shell *val, t_cmd *cmd)
 {
     char *path;
 
-    if(!set_set_red(cmd))
+    if(!set_redirection(cmd))
         exit(1);
     if(!set_pip(cmd))
         exit(1);
@@ -167,13 +178,12 @@ void    parent_process(t_cmd *cmd)
         }
     }
 }
-void    start_execution(t_exc *val)
+void    start_execution(t_shell *val)
 {
     t_cmd *list;
     int    fork_pid;
 
     list = val->list;
-    int i = 1;
     ft_herdoc(val);  
     init_shell_fds(val);
     // built_in_function(list);

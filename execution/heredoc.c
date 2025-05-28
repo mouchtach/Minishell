@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:22:28 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/21 15:57:59 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/05/28 21:16:08 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,25 @@ bool    fork_heredoc(t_cmd *tmp, char *delimiter)
     return(true);
 }
 
-bool   ft_herdoc(t_exc *val)
+bool   ft_herdoc(t_shell *val)
 {
     t_cmd *tmp;
-    t_redirec *tmp_red;
+    t_redirec *redc;
 
     tmp = val->list;
     while(tmp)
     {
-        tmp_red = tmp->input;
-        while(tmp_red)
+        redc = tmp->redirec;
+        while(redc)
         {
-            if(tmp_red->type == D_HERDOC)
-            {   
+            if(redc->type == D_HERDOC)
+            {
+                printf("herdoc: %s\n", redc->name);
                 pipe(tmp->fd_herdoc);
-                if(!fork_heredoc(tmp, tmp_red->name))
+                if(!fork_heredoc(tmp, redc->name))
                     return(perror(""), false);
             }
-            tmp_red = tmp_red->next;
+            redc = redc->next;
         }
         tmp = tmp->next;
     }

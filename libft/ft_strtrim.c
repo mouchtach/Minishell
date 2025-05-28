@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abenajib <abenajib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 17:39:49 by abenajib          #+#    #+#             */
-/*   Updated: 2025/04/05 12:37:28 by abenajib         ###   ########.fr       */
+/*   Created: 2024/10/27 18:17:18 by azmakhlo          #+#    #+#             */
+/*   Updated: 2025/05/15 14:17:12 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,18 @@
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	start;
-	size_t	end;
+	size_t	i;
+	size_t	len;
 
-	if (!s1 || !set)
+	if (!s1)
 		return (NULL);
-	start = 0;
-	end = ft_strlen(s1);
-	if (!s1 || !set)
-		return (NULL);
-	while (s1[start] && ft_strchr(set, s1[start]))
-	{
-		start++;
-	}
-	while ((end > start) && (ft_strchr(set, s1[end - 1])))
-	{
-		end--;
-	}
-	return (ft_substr(s1, start, end - start));
+	if (!set)
+		return (ft_strdup(s1));
+	len = ft_strlen(s1);
+	i = 0;
+	while (s1[i] && ft_strchr(set, s1[i]))
+		i++;
+	while (ft_strchr(set, s1[len - 1]))
+		len--;
+	return (ft_substr(s1, i, (len - i)));
 }

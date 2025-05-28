@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:50:09 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/28 11:58:13 by mouchtach        ###   ########.fr       */
+/*   Updated: 2025/05/28 18:09:01 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ char **set_path(t_list *v)
         return (NULL);
     while(ft_strcmp(tmp->key, "PATH"))
         tmp = tmp->next;
-    return(ft_split(tmp->value, ":"));
+    return(ft_split(tmp->value, ':'));
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_env.c                                          :+:      :+:    :+:   */
+/*   set_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,22 +11,22 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-int	ft_lstsize_env(t_list *lst)
-{
-	t_list	*p;
-	int		len;
+// int	ft_lstsize_env(t_list *lst)
+// {
+// 	t_list	*p;
+// 	int		len;
 
-	if (lst == NULL)
-		return (0);
-	p = lst;
-	len = 0;
-	while (p != NULL)
-	{
-		p = p->next;
-		len++;
-	}
-	return (len);
-}
+// 	if (lst == NULL)
+// 		return (0);
+// 	p = lst;
+// 	len = 0;
+// 	while (p != NULL)
+// 	{
+// 		p = p->next;
+// 		len++;
+// 	}
+// 	return (len);
+// }
 
 
 void  add_back_env(t_list **list,  t_list *new)
@@ -51,26 +51,47 @@ t_list   *creat_new_env(char *value , char *key)
 
     new = NULL;
     new = malloc(sizeof(t_list));
-    new->key = ft_strdup(key);
-    new->value = ft_strdup(value);
+    new->key = key;
+    new->value = value;
     new->next = NULL;
     new->prev = NULL;
     return(new);
 }
 
-// t_env *set_env(t_list   *env)
-// {
-//     t_list *tmp;
-    
-//     t_env *list;
-//     t_env *new;
-//     list = NULL;
-//     tmp = env;
-//     while(tmp)
-//     {
-//         new = creat_new_env(tmp->value, tmp->key);
-//         add_back_env(&list, new);
-//         tmp = tmp->next;
-//     }
-//     return (list);
-// }
+t_list *set_env(char **env)
+{
+    if(!env || !*env)
+        return (NULL);
+
+    t_list *list;
+    int i;
+    char *key;
+    char *value;
+
+    list = NULL;
+    i = 0;
+    int k = 0;
+    while(env[i])
+    {
+        k = 0;
+        while(env[i][k] && env[i][k] != '=')
+            k++;
+        if(k == 0)
+        {
+            i++;
+            continue;
+        }
+        key = ft_substr(env[i], 0, k);
+        if(!key)
+            return (NULL);
+        value = ft_substr(env[i], k + 1, ft_strlen(env[i]) - k - 1);
+        if(!value)
+        {
+            free(key);
+            return (NULL);
+        }
+        add_back_env(&list, creat_new_env(value, key));
+        i++;
+    }
+    return (list);
+}

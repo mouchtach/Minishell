@@ -3,32 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagame <yagame@student.42.fr>              +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 19:19:28 by abenajib          #+#    #+#             */
-/*   Updated: 2025/04/16 17:37:01 by yagame           ###   ########.fr       */
+/*   Created: 2024/11/05 11:33:06 by azmakhlo          #+#    #+#             */
+/*   Updated: 2024/11/12 22:23:10 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new_node)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*last;
+	t_list	*tmp;
 
-	if (!lst || !new_node)
+	if (!lst || !new)
 		return ;
 	if (*lst == NULL)
 	{
-		new_node->prev = NULL;
-		*lst = new_node;
+		*lst = new;
+		return ;
 	}
-	else
-	{
-		last = *lst;
-		while (last->next)
-			last = last->next;
-		new_node->prev = last;
-		last->next = new_node;
-	}
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp -> next = new;
 }
