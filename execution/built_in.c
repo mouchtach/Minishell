@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouchtach <mouchtach@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/05/28 12:00:55 by mouchtach        ###   ########.fr       */
+/*   Updated: 2025/05/28 16:14:17 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,44 +114,70 @@ void    ft_export(t_list *env)
     // ft_sort_env(&new);
     
 }
-
-
-void    ft_cd(t_list *env, char *path)
+void    update_env(char *key, char *value, t_list *env)
 {
-    if(!path)
-        return;
-    char *buffer;
-    buffer = getcwd(NULL, 0);
-    if(buffer == NULL)
-    {
-        perror("getcwd");
-        return ;
-    }
-    if(chdir(path) == -1)
-    {
-        perror("cd");
-        return ;
-    }
     t_list *tmp;
+
     tmp = env;
     while(tmp)
     {
-        if(ft_strcmp(tmp->key, "PWD") == 0)
+        if(!ft_strcmp(tmp->key, key))
         {
-            printf("Changing directory to: %s\n", path);
             free(tmp->value);
-            tmp->value = ft_strdup(path);
-        }
-        else if(ft_strcmp(tmp->key, "OLDPWD") == 0)
-        {
-            printf("Changing OLDPWD to: %s\n", buffer);
-            free(tmp->value);
-            tmp->value = ft_strdup(buffer);
+            tmp->value = ft_strdup(value);
+            return;
         }
         tmp = tmp->next;
     }
-    desplay_list(env);
+}
+char    *get_old_pwd(t_list *env, char *key)
+{
+    t_list *tmp;
+
+    tmp = env;
+    while(tmp)
+    {
+        if(!ft_strcmp(tmp->key, key))
+            return(tmp->value);
+        tmp = tmp->next;
+    }
+    return (NULL);
+}
+void    ft_cd(t_list *env, char *path)
+{
+    char *oldpwd;
+    char *buffer;
+    char *ret;
+
+    if(!path)
+        return;
+    oldpwd = getcwd(NULL, 0);
+    if(!oldpwd)
+        return(perror("getcwd"));
+    if(!ft_strcmp(path, "-"))
+    {
+        ret = get_old_pwd(env, "OLDPWD");
+        if(chdir(ret) == -1)
+            return(free(oldpwd), perror("cd"));
+    }
+    else if((!ft_strcmp(path, "~") )|| (!ft_strcmp(path, "--")))
+    {
+        ret = get_old_pwd(env, "HOME");
+        if(chdir(ret) == -1)
+            return(free(oldpwd), perror("cd"));
+    }
+    else
+    {
+        if(chdir(path) == -1)
+            return(free(oldpwd), perror("cd"));
+    }
+    buffer = getcwd(NULL, 0);
+    if(!buffer)
+        return(free(oldpwd), perror("getcwd"));//  free buffer
+    update_env("PWD", buffer, env);
+    update_env("OLDPWD",oldpwd, env);
     free(buffer);
+    free(oldpwd);
 }
 
 void    built_in_function(char **cmd, t_exc *var)
@@ -163,10 +189,7 @@ void    built_in_function(char **cmd, t_exc *var)
     if(ft_strcmp(cmd[0], "env") == 0 || ft_strcmp(cmd[0], "ENV")  == 0)
         ft_env(var->env);
     if(ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "EXPORT")  == 0)
-    {
         ft_export(var->env);
-    }
-    
     if(ft_strcmp(cmd[0], "cd") == 0 || ft_strcmp(cmd[0], "CD")  == 0)
         ft_cd(var->env, cmd[1]);
         
