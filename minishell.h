@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:51:10 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/28 20:50:30 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:39:37 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void    start_execution(t_shell *val);
 //built_in
 void    built_in_function(char **cmd, t_shell *var);
 t_list  *set_env(char **env);
-t_list  *creat_new_env(char *value , char *key);
+t_list  *creat_new_env(char *value , char *key, bool eg);
 void    add_back_env(t_list **list,  t_list *new);
 // t_list   *creat_new_env(char *value , char *key);
 

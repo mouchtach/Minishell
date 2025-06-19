@@ -45,14 +45,15 @@ void  add_back_env(t_list **list,  t_list *new)
     tmp->next = new; 
 }
 
-t_list   *creat_new_env(char *value , char *key)
+t_list   *creat_new_env(char *value , char *key, bool eg)
 {
     t_list *new;
 
     new = NULL;
     new = malloc(sizeof(t_list));
-    new->key = key;
-    new->value = value;
+    new->key = ft_strdup(key);
+    new->value = ft_strdup (value);
+    new->eg = eg;
     new->next = NULL;
     new->prev = NULL;
     return(new);
@@ -90,7 +91,10 @@ t_list *set_env(char **env)
             free(key);
             return (NULL);
         }
-        add_back_env(&list, creat_new_env(value, key));
+        if(ft_strcmp("OLDPWD", key))
+            add_back_env(&list, creat_new_env(value, key, true));
+        free(key);
+        free(value);
         i++;
     }
     return (list);

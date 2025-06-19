@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:25:30 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/05/28 18:13:38 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:36:18 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
 	char			*key;
+	bool			eg;
 	char			*value;
 	struct s_list	*prev;
 	struct s_list	*next;

@@ -6,13 +6,11 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/05/28 17:12:09 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:31:53 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// ECHO
 
 bool    check_n(char *parm)
 {
@@ -26,6 +24,7 @@ bool    check_n(char *parm)
         return (true);
     return(false);
 }
+
 void    ft_echo(char **cmd) // echo -n 
 {
     int i = 1;
@@ -47,22 +46,6 @@ void    ft_echo(char **cmd) // echo -n
     printf("\n");
 }
 
-
-void    ft_pwd(t_shell *var)
-{
-    t_list *env;
-    env = var->env;
-    while (env)
-    {
-        if(!ft_strcmp(env->key, "PWD"))
-        {      
-            printf("%s\n", env->value);
-            return;
-        }
-        env = env->next;
-    }
-}
-
 void    ft_list(t_list *env)
 {
     t_list *tmp;
@@ -70,7 +53,8 @@ void    ft_list(t_list *env)
     tmp = env;
     while(tmp)
     {
-        printf("%s=%s\n", tmp->key, tmp->value);
+        if(tmp->eg == true)
+            printf("%s=%s\n", tmp->key, tmp->value);
         tmp = tmp->next;
     }
 }
@@ -78,10 +62,16 @@ void    ft_list(t_list *env)
 
 void    desplay_list(t_list *list)
 {
-    while(list)
+    t_list *tmp;
+    
+    tmp = list;
+    while(tmp)
     {
-        printf("key = %s, value = %s\n", list->key, list->value);
-        list = list->next;
+        if(tmp->eg == true)
+            printf("%s='%s'\n", tmp->key, tmp->value);
+        else
+            printf("%s\n", tmp->key);
+        tmp = tmp->next;
     }
 }
 
@@ -91,34 +81,110 @@ t_list *ft_copy_env(t_list *env)
     t_list *new = NULL;
 
     list = env;
-
     while(list)
     {
-        add_back_env(&new, creat_new_env(list->value, list->key));
+        add_back_env(&new, creat_new_env(list->value, list->key, list->eg));
         list = list->next;
     }
     return(new);
 }
 
-
-void    ft_export(t_list *env)
+void sort_export(t_list *var)
 {
     t_list *new = NULL;
-
-    new = ft_copy_env(env);
-    desplay_list(new);
-    // ft_swap(&new, "PATH", "PWD");
-    printf("\nAfter swapping:\n");
-    desplay_list(new);
-
-    // ft_sort_list(&new);
+    t_list *tmp;
+    t_list *tmp2;
+    t_list *small;
     
+    new = ft_copy_env(var);
+    tmp = new;
+    while (tmp)
+    {
+        small = tmp;
+        tmp2 = tmp->next;
+        while (tmp2)
+        {
+            if (ft_strcmp(tmp2->key, small->key) < 0)
+                small = tmp2;
+            tmp2 = tmp2->next;
+        }
+        if (small != tmp)
+        {
+            char *temp_key = tmp->key;
+            bool eg = tmp->eg;
+            char *temp_value = tmp->value;
+            tmp->key = small->key;
+            tmp->value = small->value;
+            tmp->eg = small->eg;
+            small->key = temp_key;
+            small->value = temp_value;
+            small->eg = eg;
+        }
+        tmp = tmp->next;
+    }
+    desplay_list(new);
+    //clear list;
 }
-void    update_env(char *key, char *value, t_list *env)
+
+int    add_export_list(t_list **env,char *value, char *key, bool eg)
 {
     t_list *tmp;
 
-    tmp = env;
+    tmp = *env;
+    while(tmp)
+    {
+        if(!ft_strcmp(tmp->key, key))
+        {
+            printf("exist\n");
+            free(tmp->key);
+            tmp->key = key;
+            return (0);
+        }
+        tmp = tmp->next;
+    }
+    add_back_env(env, creat_new_env(value, key , eg));
+    return(1);
+    
+}
+
+void    ft_export(t_shell *var, char **cmd)
+{
+    bool eg = false;
+    char *value;
+    char *key;
+    
+    int j = 1;
+    if(!cmd[j])
+        sort_export(var->env);
+    while(cmd[j])
+    {
+        int i = 0;
+        while(cmd[j][i] && cmd[j][i] != '=')
+            i++;
+        if(cmd[j][i] == '=')
+        {
+            value = ft_strdup(cmd[j] + i + 1);
+            eg = true;
+        }
+        else
+            value = ft_strdup(cmd[j] + i);
+        key = ft_substr(cmd[j], 0, i);
+        printf("value = %s\n", value);
+        if(!add_export_list(&var->env, value, key, eg))
+            free(value);
+        else
+        {
+            free(value);
+            free(key);
+        }
+        j++;
+    } 
+}
+void    update_env(char *key, char *value, t_list **env)
+{
+    t_list *tmp;
+
+    tmp = *env;
     while(tmp)
     {
         if(!ft_strcmp(tmp->key, key))
@@ -129,8 +195,10 @@ void    update_env(char *key, char *value, t_list *env)
         }
         tmp = tmp->next;
     }
+    add_back_env(env, creat_new_env(value, key, true));  
 }
-char    *get_old_pwd(t_list *env, char *key)
+
+char    *get_value(t_list *env, char *key)
 {
     t_list *tmp;
 
@@ -143,40 +211,54 @@ char    *get_old_pwd(t_list *env, char *key)
     }
     return (NULL);
 }
+
+char *get_path(char *str, t_list *env)
+{
+    char *ret;
+         
+    if(!ft_strcmp(str, "-"))
+    {
+        ret = get_value(env, "OLDPWD");
+        if(!ret)
+            return(printf("cd: OLDPWD not set\n"), NULL);
+        return(ret); 
+    }
+    else if((!ft_strcmp(str, "--")))
+    {
+        ret = get_value(env, "HOME"); 
+        if(!ret)
+            return(printf("cd: HOME not set\n"), NULL);
+        return(ret); 
+    }
+    else if(!ft_strncmp(str, "~/", 2))
+    {
+        ret = ft_strjoin(get_value(env, "HOME"), str + 1);
+        return(ret);
+    }
+    else 
+        return(str);
+}
+
 void    ft_cd(t_list *env, char *path)
 {
     char *oldpwd;
-    char *buffer;
-    char *ret;
 
     if(!path)
         return;
     oldpwd = getcwd(NULL, 0);
+    path = get_path(path, env);
     if(!oldpwd)
         return(perror("getcwd"));
-    if(!ft_strcmp(path, "-"))
-    {
-        ret = get_old_pwd(env, "OLDPWD");
-        if(chdir(ret) == -1)
-            return(free(oldpwd), perror("cd"));
-    }
-    else if((!ft_strcmp(path, "~") )|| (!ft_strcmp(path, "--")))
-    {
-        ret = get_old_pwd(env, "HOME");
-        if(chdir(ret) == -1)
-            return(free(oldpwd), perror("cd"));
-    }
-    else
-    {
-        if(chdir(path) == -1)
-            return(free(oldpwd), perror("cd"));
-    }
-    buffer = getcwd(NULL, 0);
-    if(!buffer)
+    if(chdir(path) == -1)
+        return(free(oldpwd), perror("cd"));
+    if(!ft_strncmp(path, "~/", 2)) // hna khdamt strjoin
+        free(path);
+    path = getcwd(NULL, 0);
+    if(!path)
         return(free(oldpwd), perror("getcwd"));//  free buffer
-    update_env("PWD", buffer, env);
-    update_env("OLDPWD",oldpwd, env);
-    free(buffer);
+    update_env("PWD", path, &env);
+    update_env("OLDPWD",oldpwd, &env);
+    free(path);
     free(oldpwd);
 }
 
@@ -185,11 +267,11 @@ void    built_in_function(char **cmd, t_shell *var)
     if(ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "ECHO")  == 0)
         ft_echo(cmd);
     if(ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "PWD")  == 0)
-        ft_pwd(var);
+        printf("%s\n", get_value(var->env, "PWD"));
     if(ft_strcmp(cmd[0], "env") == 0 || ft_strcmp(cmd[0], "ENV")  == 0)
         ft_list(var->env);
     if(ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "EXPORT")  == 0)
-        ft_export(var->env);
+        ft_export(var, cmd);
     if(ft_strcmp(cmd[0], "cd") == 0 || ft_strcmp(cmd[0], "CD")  == 0)
         ft_cd(var->env, cmd[1]);
         
