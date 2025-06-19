@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:51:02 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/06/18 21:20:23 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:30:07 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ int	main(int ac, char **av, char **env)
 		else if (var->list)
 		{
 			print_cmd_list(var->list);
-            // start_execution(var);
-            built_in_function(var->list->cmd,  var);
+            start_execution(var);
 			free_cmd_list(var->list);
-            
 		}
 		else
 			free(line);

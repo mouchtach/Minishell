@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:52:21 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/28 21:14:07 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:20:33 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void reset_stdin(t_shell *shell)
 
 bool    set_input(t_cmd *command, t_redirec *in)
 {
-    
+
     if(command->fd_io[0] != STDIN_FILENO)
         close(command->fd_io[0]);
     if(in->type == D_INFILE)
@@ -49,9 +49,8 @@ bool    set_input(t_cmd *command, t_redirec *in)
     }
     else
     {
-        
-    }
         command->fd_io[0] = command->fd_herdoc[0];
+    }
     return (true);
 }
 
@@ -79,13 +78,10 @@ bool    set_redirection(t_cmd *command) // this fuction for list redirection in 
 
     t_redirec *tmp;
     tmp = command->redirec;
-    
+
     command->fd_io[0] = STDIN_FILENO; // Default input
     command->fd_io[1] = STDOUT_FILENO; // Default output
-    // command->fd_herdoc[0] = -1; // Default herdoc fd
-    // command->fd_herdoc[1] = -1; // Default herdoc fd
-    // command->fd_pip[0] = -1; // Default pipe read end
-    // command->fd_pip[1] = -1; // Default pipe read end
+
     while(tmp)
     {
         if(tmp->type == D_INFILE || tmp->type == D_HERDOC)
@@ -99,33 +95,11 @@ bool    set_redirection(t_cmd *command) // this fuction for list redirection in 
     return (true);
 }
 
-// bool    set_set_red(t_cmd *command) // this fuction for  tow list in_list and out_list
-// {
-
-//     t_redirec *tmp;
-    
-//     tmp = command->input;
-//     while(tmp)
-//     {
-//         if(!set_input(command, tmp))
-//             return(false);
-//         tmp = tmp->next;
-//     }
-//     tmp = command->output;
-//     while(tmp)
-//     {
-//         if(!set_output(command, tmp))
-//             return(false);
-//         tmp = tmp->next;
-//     }
-//     return(true);
-// }
-
 bool    set_pip(t_cmd *command)
 {
     if(command->fd_io[1] != STDOUT_FILENO && command->fd_pip[1] > 0)
         close(command->fd_pip[1]);
-        
+
     else if(command->fd_io[1] == STDOUT_FILENO && command->next  &&command->fd_pip[1] > 0)
         command->fd_io[1] = command->fd_pip[1];
     if(command->prev && command->fd_io[0] == STDIN_FILENO)
@@ -134,7 +108,22 @@ bool    set_pip(t_cmd *command)
         close(command->fd_pip[0]);
     return (true);
 }
-
+bool    ft_dup_std(t_cmd *cmd)
+{
+    if(cmd->fd_io[0] != STDIN_FILENO)
+    {
+        if(dup2(cmd->fd_io[0], STDIN_FILENO) == -1)
+            return (false);
+        close(cmd->fd_io[0]);
+    }
+    if (cmd->fd_io[1] != STDOUT_FILENO)
+    {
+        if(dup2(cmd->fd_io[1], STDOUT_FILENO) == -1 )
+            return (false);
+        close(cmd->fd_io[1]);
+    }
+    return(true);
+}
 void    child_process(t_shell *val, t_cmd *cmd)
 {
     char *path;
@@ -143,24 +132,22 @@ void    child_process(t_shell *val, t_cmd *cmd)
         exit(1);
     if(!set_pip(cmd))
         exit(1);
-    path = get_path_cmd(val->path, cmd->cmd[0]);
-    if(!path)
-        exit(127);
-    if(cmd->fd_io[0] != STDIN_FILENO)
-    {
-        if(dup2(cmd->fd_io[0], STDIN_FILENO) == -1) 
-            exit(1);
-        close(cmd->fd_io[0]);
-    }
-    if (cmd->fd_io[1] != STDOUT_FILENO)
-    {
-        if(dup2(cmd->fd_io[1], STDOUT_FILENO) == -1 )
-            exit(1);
-        close(cmd->fd_io[1]);
-    }
+    if(!ft_dup_std(cmd))
+         exit(1);
     cleanup_shell_fds(val);
-    if(execve(path, cmd->cmd, NULL) == -1)
-        exit(1);
+    if(is_built(cmd->cmd[0]))
+    {
+        built_in_function(cmd->cmd, val);
+        exit(0);
+    }
+    else
+    {
+        path = get_path_cmd(val->path, cmd->cmd[0]);
+        if(!path)
+            exit(127);
+        if(execve(path, cmd->cmd, NULL) == -1)
+            exit(1);
+    }
 }
 
 void    parent_process(t_cmd *cmd)
@@ -168,7 +155,7 @@ void    parent_process(t_cmd *cmd)
     if(cmd->fd_pip[1] > 0)
         close(cmd->fd_pip[1]);
     if(cmd->fd_herdoc[0] > 0)
-        close(cmd->fd_herdoc[0] ); 
+        close(cmd->fd_herdoc[0] );
     if(cmd->prev)
     {
         if(cmd->prev->prev)
@@ -178,15 +165,12 @@ void    parent_process(t_cmd *cmd)
         }
     }
 }
-void    start_execution(t_shell *val)
+void    ft_fork(t_shell *val)
 {
-    t_cmd *list;
-    int    fork_pid;
+    t_cmd   *list;
+    int     fork_pid;
 
     list = val->list;
-    ft_herdoc(val);  
-    init_shell_fds(val);
-    // built_in_function(list);
     while(list)
     {
         if(list->next)
@@ -207,5 +191,26 @@ void    start_execution(t_shell *val)
         list = list->next;
     }
     while(wait(NULL) > 0);
+}
+void    start_execution(t_shell *val)
+{
+
+    ft_herdoc(val);
+    init_shell_fds(val);
+
+    if (is_built(val->list->cmd[0]) && !val->list->next)
+    {
+        if(!set_redirection(val->list))
+            exit(1);
+        if(!set_pip(val->list))
+            exit(1);
+        if(!ft_dup_std(val->list))
+             exit(1);
+        built_in_function(val->list->cmd, val);
+    }
+    else
+    {
+        ft_fork(val);
+    }
     cleanup_shell_fds(val);
 }
