@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/06/19 16:11:19 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:19:34 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int    is_built(char *cmd)
 {
-    if(ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "ECHO")  == 0)
+    if(ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "ECHO")  == 0)  // unset
         return(1);
     if(ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "PWD")  == 0)
         return(1);
@@ -24,6 +24,8 @@ int    is_built(char *cmd)
     if(ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "EXPORT")  == 0)
         return(1);
     if(ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "CD")  == 0)
+        return(1);
+    if(ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "UNSET")  == 0)
         return(1);
     return(0);
 }
@@ -276,9 +278,37 @@ void    ft_cd(t_list *env, char *path)
     free(oldpwd);
 }
 
-void    built_in_function(char **cmd, t_shell *val)
+void    ft_unset(t_shell *val, char **cmd)
 {
-    printf("build in\n");
+    int j = 1;
+    t_list *list;
+
+    while(cmd[j])
+    {
+        list = val->env;
+        while(list)
+        {
+            if(list->next)
+            {
+                if(!ft_strcmp(cmd[j],list->next->key))
+                {
+                    t_list *del = list->next;
+                    list = list->next->next;
+                    free(del->key);
+                    if(del->value)
+                        free(del->value);
+                }
+            }
+            list = list->next;
+        }
+        j++;
+    }
+}
+
+bool    built_in_function(char **cmd, t_shell *val)
+{
+    printf("is built_in = %s\n", cmd[0]);
+
     if(ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "ECHO")  == 0)
         ft_echo(cmd);
     if(ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "PWD")  == 0)
@@ -289,7 +319,8 @@ void    built_in_function(char **cmd, t_shell *val)
         ft_export(val, cmd);
     if(ft_strcmp(cmd[0], "cd") == 0 || ft_strcmp(cmd[0], "CD")  == 0)
         ft_cd(val->env, cmd[1]);
-    printf("end\n");
-
+    if(ft_strcmp(cmd[0], "unset") == 0 || ft_strcmp(cmd[0], "UNSET")  == 0)
+        ft_unset(val, cmd);
+    return(true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:51:10 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/06/19 15:04:38 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/20 13:55:20 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 # define COLORE_MAGENTA "\033[1;35m"
 # define COLORE_CYAN "\033[1;36m"
 # define COLORE_WHITE "\033[1;37m"
+
+// message error
+# define OPEN_FAILD "minishell open faild"
+# define DUP_FAILD "minishell dup faild"
+# define HERDOC_FAILD "minishell herdoc"
+# define JOIN_FAILD "minishell join faild"
+# define FORK_FAILD "minishell fork faild"
+# define GET_LINE "minishell get next line faild"
 
 typedef enum s_type
 {
@@ -126,11 +134,11 @@ char	*get_path_cmd(char **path, char *cmd);
 char	*get_next_line(int fd);
 bool	ft_herdoc(t_shell *val);
 // t_shell   *strct_copy(t_cmdarg    *old_strct, t_list *env);
-void    start_execution(t_shell *val);
+bool    start_execution(t_shell *val);
 
 
 //built_in
-void    built_in_function(char **cmd, t_shell *var);
+bool    built_in_function(char **cmd, t_shell *var);
 int		is_built(char *cmd);
 t_list  *set_env(char **env);
 t_list  *creat_new_env(char *value , char *key, bool eg);
