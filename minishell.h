@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:51:10 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/06/20 13:55:20 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/21 13:42:31 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,49 @@ bool	ft_herdoc(t_shell *val);
 // t_shell   *strct_copy(t_cmdarg    *old_strct, t_list *env);
 bool    start_execution(t_shell *val);
 
+//redirections
+bool    set_input(t_cmd *command, t_redirec *in);
+bool    set_output(t_cmd *command, t_redirec *out);
+bool    set_redirection(t_cmd *command);
+bool    set_pip(t_cmd *command);
+bool    ft_dup_std(t_cmd *cmd);
+
+
+// std
+bool  init_shell_fds(t_shell *shell);
+void cleanup_shell_fds(t_shell *shell);
+void reset_stdin(t_shell *shell);
+
+// fork
+void    child_process(t_shell *val, t_cmd *cmd);
+void    parent_process(t_cmd *cmd);
+void    ft_fork(t_shell *val);
 
 //built_in
-bool    built_in_function(char **cmd, t_shell *var);
+bool    built_in_function(char **cmd, t_shell *val);
 int		is_built(char *cmd);
+   // export
+void    ft_export(t_shell *var, char **cmd);
+void	sort_export(t_list *var);
+void    desplay_list_export(t_list *list);
+t_list	*ft_copy_env(t_list *env);
+int		add_export_list(t_list **env,char *value, char *key, bool eg);
+	//cd
+char	*get_path(char *str, t_list *env);
+void    update_env(char *key, char *value, t_list **env);
+void    ft_cd(t_list *env, char *path);
+char    *get_value(t_list *env, char *key);
+
+	//echo
+void    ft_echo(char **cmd);
+   
 t_list  *set_env(char **env);
 t_list  *creat_new_env(char *value , char *key, bool eg);
 void    add_back_env(t_list **list,  t_list *new);
 // t_list   *creat_new_env(char *value , char *key);
 
+
+// clean
+void f_node_t_list(t_list *node);
+void f_clear_t_list(t_list **node);
 #endif

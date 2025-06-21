@@ -10,11 +10,18 @@ SRC =	minishell.c \
 		./parssing/syntax_handle.c \
 		./parssing/utils_a.c \
 		./parssing/utils_b.c \
-		./execution/built_in.c \
+		./builtin/built_in.c \
+		./builtin/cd.c \
+		./builtin/echo.c \
+		./builtin/export.c \
 		./execution/execution.c \
+		./execution/fork.c \
 		./execution/get_next_line.c \
+		./execution/redirections.c \
+		./execution/utils_std.c \
 		./execution/get_path.c \
 		./execution/heredoc.c \
+		./execution/clean.c \
 		./execution/set_env.c \
 
 OBJS = $(SRC:.c=.o)

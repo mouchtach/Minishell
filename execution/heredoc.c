@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:22:28 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/06/20 13:07:35 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:12:37 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ bool    herdoc_read(t_cmd *tmp, char *dlm)
         ft_putstr_fd("> ", 1);
         line  = get_next_line(STDIN_FILENO);
         if(!line)
-        {
-            free(dlm);
-            return(perror(GET_LINE), false);
-        }
+           break;
         if(!ft_strcmp(line , dlm))
             break;
         else
@@ -67,8 +64,9 @@ bool    fork_heredoc(t_cmd *tmp, char *delimiter)
     }
     if(fork_pid > 0)
     {
-        close(tmp->fd_herdoc[1]);
         waitpid(fork_pid, NULL, 0);
+        close(tmp->fd_herdoc[1]);
+        tmp->fd_herdoc[1] = -1;
     }
     return(true);
 }
@@ -82,14 +80,17 @@ bool   ft_herdoc(t_shell *val)
     tmp = val->list;
     while(tmp)
     {
-        set_std_cmd(tmp);
+        // set_std_cmd(tmp);
         redc = tmp->redirec;
         while(redc)
         {
             if(redc->type == D_HERDOC)
             {
                 // open pipe for write and clode just pip[0]
-                pipe(tmp->fd_herdoc);
+                if(tmp->fd_herdoc[0] > 0)
+                    close(tmp->fd_herdoc[0]);
+                if(pipe(tmp->fd_herdoc) == -1) 
+                    return (perror("pipe"), false);
                 if(!fork_heredoc(tmp, redc->name))
                     return(perror(HERDOC_FAILD), false);
             }

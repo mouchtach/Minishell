@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:51:02 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/06/20 16:21:51 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/06/21 10:53:06 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,19 @@ int	process_line(char *line, t_cmd **token_ptr)
 	return (0);
 }
 
+void ft_handler(int arg)
+{
+	(void)arg;
+	printf("ctrl c not work");
+}
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	t_shell	*var = malloc(sizeof(t_shell));
 
 	(void)av;
+
+	signal(SIGINT, ft_handler);
 	if (ac != 1)
 		return (1);
     // set_env();
@@ -48,6 +55,11 @@ int	main(int ac, char **av, char **env)
 	{
 		var->list = NULL;
 		line = readline("minishell> ");
+		if(line == NULL)
+		{
+			printf("\n");
+			exit(0);
+		}
 		if (process_line(line, &var->list) != 0)
 			return (1);
 		if (syntax_error(line))
