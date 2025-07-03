@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:55:20 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/03 18:18:36 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:06:44 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	desplay_env(char **env)
 		i++;
 	}
 }
-
 
 void desplay(t_list *list)
 {

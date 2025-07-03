@@ -6,12 +6,11 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:22:52 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/03 19:52:40 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:05:33 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
 
 void    exit(t_shell *shell)
 {

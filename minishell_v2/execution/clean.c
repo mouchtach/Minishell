@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 15:38:12 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/03 14:21:16 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:05:42 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void close_fd(int *fd)
     close(*fd);
     *fd = -1;
 }
-
 
 void clear_all_pipes(t_cmd *cmd)
 {

@@ -6,13 +6,12 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 20:38:23 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/03 19:52:58 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:05:38 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../minishell.h"
-
 
 void remove_env_node(t_shell *val, t_list *curr)
 {
