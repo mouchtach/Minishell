@@ -78,13 +78,6 @@ minishell_v1/
 
 ---
 
-### 📸 Screenshots
-
-> 📝 **Note**: Screenshots or GIFs can be added here to demonstrate terminal usage.
-> You can record usage with tools like `asciinema`, `peek`, or simply take static terminal screenshots.
-
----
-
 ### 🤝 Contributors
 
 | Version | Author                                    | Role                  |
