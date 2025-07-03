@@ -1,11 +1,8 @@
 CC = cc
-
 CFLAGS = -Wall -Wextra -Werror
-
 RFLG = -lreadline -lncurses
-
 NAME = minishell
-
+READLINE_DIR = $(shell brew --prefix readline)
 LIB = ./libft/libft.a
 
 SRC = 	minishell.c									\
@@ -30,11 +27,11 @@ SRC = 	minishell.c									\
 		./parsing/syntax/utils_scrap.c				\
 		./parsing/leaks/ffree.c						\
 		./parsing/leaks/free_cmd_list.c				\
-		./builtin/built_in.c 						\
-		./builtin/cd.c 								\
-		./builtin/unset.c 							\
-		./builtin/echo.c 							\
-		./builtin/export.c							\
+		./execution/builtin/built_in.c 				\
+		./execution/builtin/cd.c 					\
+		./execution/builtin/unset.c 				\
+		./execution/builtin/echo.c 					\
+		./execution/builtin/export.c				\
 		./execution/execution.c 					\
 		./execution/fork.c 							\
 		./execution/get_next_line.c 				\
@@ -67,7 +64,7 @@ SRC_LIB = 	./libft/ft_strjoin.c 	\
 			./libft/ft_split.c		\
 			./libft/ft_putstr_fd.c  \
 			./libft/ft_putchar_fd.c \
-			./libft/ft_atoi.c \
+			./libft/ft_atoi.c       \
 
 OBJ_LIB = $(SRC:.c=.o)
 
@@ -76,20 +73,20 @@ HDR_LIB = ./libft/libft.h
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB) -I$(HOME)/.brew/Cellar/readline/8.2.13/include -L$(HOME)/.brew/Cellar/readline/8.2.13/lib -o $@ $(RFLG)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -I$(READLINE_DIR)/include -L$(READLINE_DIR)/lib -o $@ $(RFLG)
 
 %.o: %.c $(HDR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIB): $(SRC_LIB) $(HDR_LIB)
-	$(MAKE) -C ./libft
+	@$(MAKE) -C ./libft
 
 clean:
-	rm -f $(OBJ)
-	$(MAKE) -C ./libft clean
+	@rm -f $(OBJ)
+	@$(MAKE) -C ./libft clean
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C ./libft fclean
+	@rm -f $(NAME)
+	@$(MAKE) -C ./libft fclean
 
 re: fclean all

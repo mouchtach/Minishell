@@ -6,11 +6,12 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/07/03 15:13:10 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:52:29 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
+
 
 int	is_builtin(char *cmd)
 {

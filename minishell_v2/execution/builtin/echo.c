@@ -6,11 +6,12 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:06:47 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/06/29 09:49:14 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:52:36 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
+
 
 static bool    check_n(char *parm)
 {

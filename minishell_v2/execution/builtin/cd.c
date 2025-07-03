@@ -6,12 +6,13 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:26:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/03 18:10:21 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:52:33 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../minishell.h"
+#include "../../minishell.h"
+
 
 char    *get_value(t_list *env, char *key)
 {
