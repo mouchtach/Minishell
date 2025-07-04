@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 22:19:39 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 15:06:38 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 22:14:40 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int ac, char **av, char **ev)
 		shell->list = assemble_command(buffer, shell->env);
 		if (!shell->list)
 			continue ;
-		printf("start execute\n");
 		execute_commands(shell);
 		cmdfree(shell->list);
 	}

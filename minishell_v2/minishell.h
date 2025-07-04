@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/04 18:04:42 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:46:03 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,4 +267,7 @@ void					close_fd(int *fd);
 
 //signals
 void					handle_sigint(int sig);
+void					handle_parent_heredoc_sigint(int sig);
+void					herdoc_sig(void);
+void					restore_signals(void);
 #endif
