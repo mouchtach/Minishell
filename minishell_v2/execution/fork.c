@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:51:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 10:25:20 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 15:14:19 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char	*check_if_exist_path(t_shell *val, t_cmd *cmd)
 		if (!access(cmd->cmd[0], X_OK))
 			return (ft_strdup(cmd->cmd[0]));
 		else
-			printf("minishell: %s: No such file or directory\n", cmd->cmd[0]);
+			return (printf("minishell: %s: No such file or directory\n"
+					, cmd->cmd[0]), NULL);
 	}
 	return (get_executable_paths(full_path, cmd->cmd[0]));
 }
@@ -59,7 +60,8 @@ void	child_process(t_shell *val, t_cmd *cmd)
 			exit(127);
 		env = build_environment_array(val->env);
 		if (execve(path, cmd->cmd, env) == -1)
-			exit(1);
+			return (error_message(errno, cmd->cmd[0]),
+				free(path), p2char(&env), exit(1));
 	}
 }
 

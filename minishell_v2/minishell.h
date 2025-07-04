@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/04 10:29:51 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:58:52 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include "./parsing/include/syntax.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define OPEN_FAILD "minishell open faild"
 # define DUP_FAILD "minishell dup faild"
@@ -32,8 +32,6 @@
 # define FORK_FAILD "minishell fork faild"
 # define GET_LINE "minishell get next line faild"
 # define ERR_MEM "minishell alloc"
-
-int						g_exit_status;
 
 typedef enum s_type
 {
@@ -65,8 +63,8 @@ typedef struct s_redirec
 
 typedef struct s_cmd
 {
-	char				**cmd;
-	t_redirec			*redirec;
+	char				**cmd; //
+	t_redirec			*redirec; //
 	int					fd_herdoc[2];
 	int					fd_io[2];
 	int					fd_pip[2];
@@ -76,10 +74,11 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	t_cmd				*list;
-	t_list				*env;
+	t_cmd				*list; //
+	t_list				*env; //
 	int					std_backup[2];
-}						t_shell;
+	int					exit_status;
+}						t_shell; //
 
 typedef struct s_spl
 {
@@ -205,7 +204,7 @@ char					**get_system_paths(t_list *v);
 char					*get_executable_paths(char **path, char *cmd);
 char					*get_next_line(int fd);
 bool					process_heredocs(t_shell *val);
-bool					execute_commands(t_shell *val);
+void					execute_commands(t_shell *val);
 // redirections
 bool					set_input(t_cmd *command, t_redirec *in);
 bool					set_output(t_cmd *command, t_redirec *out);
@@ -225,6 +224,7 @@ void					execute_with_fork(t_shell *val);
 // built_in
 void					execute_builtin(char **cmd, t_shell *val);
 int						is_builtin(char *cmd);
+void					ft_exit(t_shell **shell);
 //	//export
 int						add_export_list(t_list **env, char *value, char *key,
 							bool eg);
@@ -260,8 +260,11 @@ t_list					*environment(char **env);
 // leaks meme
 void					free_list_node(t_list *node);
 void					free_list(t_list **node);
-void					cleanup_shell(t_shell *shell);
+void					cleanup_shell(t_shell **shell);
 // leaks fd
 void					clear_all_pipes(t_cmd *cmd);
 void					close_fd(int *fd);
+
+//signals
+void					handle_sigint(int sig);
 #endif

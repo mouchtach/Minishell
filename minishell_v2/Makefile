@@ -42,6 +42,7 @@ SRC =	minishell.c									\
 		./execution/builtin/cd.c					\
 		./execution/builtin/unset.c					\
 		./execution/builtin/echo.c					\
+		./execution/builtin/exit.c					\
 		./execution/builtin/export.c				\
 		./execution/builtin/export_utils.c			\
 		./execution/execution.c						\
@@ -83,7 +84,7 @@ $(NAME): $(OBJ) $(LIB)
 		*execution*) \
 			echo "$(BLUE)⚡ [Execution] Compiling:\t$<$(RESET)";; \
 	esac
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(READLINE_DIR)/include -c $< -o $@
 
 clean:
 	@echo "$(RED)$(BOLD)🧹 CLEANING OBJECT FILES...$(RESET)"

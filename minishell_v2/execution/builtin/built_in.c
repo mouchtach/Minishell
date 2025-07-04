@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/07/04 10:06:37 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:57:31 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_builtin(char **cmd, t_shell *val)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		ft_unset(val, cmd);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		exit(0);
+		ft_exit(&val);
 	else
 		return ;
 }

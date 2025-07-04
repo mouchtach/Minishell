@@ -6,14 +6,15 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:22:52 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 01:17:47 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 15:13:42 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	exit(t_shell *shell)
+void	ft_exit(t_shell **shell)
 {
 	cleanup_shell(shell);
-	exit(g_exit_status);
+	printf("exit\n");
+	exit(0);
 }

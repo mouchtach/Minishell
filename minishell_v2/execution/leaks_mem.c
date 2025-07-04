@@ -6,19 +6,19 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 15:38:12 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 00:21:39 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:56:58 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	cleanup_shell(t_shell *shell)
+void	cleanup_shell(t_shell **shell)
 {
-	clear_all_pipes(shell->list);
-	free_list(&shell->env);
-	cmdfree(shell->list);
-	free(shell);
-	shell = NULL;
+	clear_all_pipes((*shell)->list);
+	free_list(&(*shell)->env);
+	cmdfree((*shell)->list);
+	free(*shell);
+	*shell = NULL;
 }
 
 void	free_list_node(t_list *node)

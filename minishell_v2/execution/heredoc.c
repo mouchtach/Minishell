@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:22:28 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 01:14:39 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:26:33 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ bool	fork_and_handle_heredoc(t_shell *shell,
 	if (fork_pid == 0)
 	{
 		herdoc_read(shell->env, tmp, delimiter, expand);
+		cmdfree(tmp);
 		free_list(&shell->env);
 		exit(0);
 	}
