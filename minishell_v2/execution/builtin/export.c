@@ -6,29 +6,37 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 19:57:16 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 01:25:59 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:04:31 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	add_export_list(t_list **env, char *value, char *key, bool eg)
+void	add_export_list(t_list **env, char *value, char *key, bool eg)
 {
 	t_list	*tmp;
+	int		exist;
 
+	exist = 0;
 	tmp = *env;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, key))
 		{
-			free(tmp->value);
-			tmp->value = value;
-			return (0);
+			exist = 1;
+			if (eg)
+			{
+				if (tmp->value)
+					free(tmp->value);
+				tmp->value = ft_strdup(value);
+				tmp->eg = eg;
+				return ;
+			}
 		}
 		tmp = tmp->next;
 	}
-	list_add_back(env, list_new_node(value, key, eg));
-	return (1);
+	if (!exist)
+		list_add_back(env, list_new_node(value, key, eg));
 }
 
 void	sort_export(t_list *var)
@@ -78,13 +86,11 @@ void	export_new(char *str, t_shell *var)
 	else
 		value = ft_strdup(str + i);
 	key = ft_substr(str, 0, i);
-	if (!add_export_list(&var->env, value, key, eg))
+	add_export_list(&var->env, value, key, eg);
+	if (value)
 		free(value);
-	else
-	{
-		free(value);
+	if (key)
 		free(key);
-	}
 }
 
 void	ft_export_variable(t_shell *var, char **cmd)

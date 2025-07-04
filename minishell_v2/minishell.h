@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/04 14:58:52 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:04:42 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void					execute_builtin(char **cmd, t_shell *val);
 int						is_builtin(char *cmd);
 void					ft_exit(t_shell **shell);
 //	//export
-int						add_export_list(t_list **env, char *value, char *key,
+void					add_export_list(t_list **env, char *value, char *key,
 							bool eg);
 void					sort_export(t_list *var);
 void					export_new(char *str, t_shell *var);

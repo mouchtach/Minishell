@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 20:38:23 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 01:19:08 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:02:34 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	ft_unset(t_shell *val, char **cmd)
 	t_list	*curr;
 
 	j = 1;
-	curr = val->env;
 	while (cmd[j])
 	{
+		curr = val->env;
 		while (curr)
 		{
 			if (!ft_strcmp(cmd[j], curr->key))
