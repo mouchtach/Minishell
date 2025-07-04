@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:01:34 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/06/21 16:06:24 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:27:05 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@ static void	*others_node_red(t_redirec *new, t_redirec **tmp, t_token *tokens)
 	new = red_node();
 	new->type = tokens->type_token;
 	new->name = ft_strdup(tokens->next->content);
-	if(tokens->next->exp == 0)
+	if (tokens->next->exp == 0)
 		new->type = D_HERDOC_Q;
 	(*tmp)->next = new;
 	*tmp = new;
 	return (new);
 }
 
-static t_redirec	*first_node(t_redirec *red, t_redirec **tmp, t_token *tokens, int *i)
+static t_redirec	*first_node(t_redirec *red, t_redirec **tmp,
+		t_token *tokens, int *i)
 {
 	red = red_node();
 	red->type = tokens->type_token;
 	red->name = ft_strdup(tokens->next->content);
-	if(tokens->next->exp == 0)
+	if (tokens->next->exp == 0)
 		red->type = D_HERDOC_Q;
 	*tmp = red;
 	*i = *i + 1;

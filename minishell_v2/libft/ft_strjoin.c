@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 12:14:40 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/06/28 13:07:13 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:17:58 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	len_s = ft_strlen(s1) + ft_strlen(s2);
 	p = (char *)malloc((sizeof(char) * len_s) + 1);
 	if (!p)
-		return(strerror(errno), NULL);
+		return (strerror(errno), NULL);
 	i = -1;
 	while (s1[++i])
 		p[i] = s1[i];

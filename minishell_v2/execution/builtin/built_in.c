@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/07/03 20:05:21 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:06:37 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,22 @@ void	print_env_list(t_list *env)
 	}
 }
 
-bool	execute_builtin(char **cmd, t_shell *val)
+void	execute_builtin(char **cmd, t_shell *val)
 {
 	if (ft_strcmp(cmd[0], "echo") == 0)
 		ft_echo(cmd);
-	if (ft_strcmp(cmd[0], "pwd") == 0)
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		printf("%s\n", get_value(val->env, "PWD"));
-	if (ft_strcmp(cmd[0], "env") == 0)
+	else if (ft_strcmp(cmd[0], "env") == 0)
 		print_env_list(val->env);
-	if (ft_strcmp(cmd[0], "export") == 0)
+	else if (ft_strcmp(cmd[0], "export") == 0)
 		ft_export_variable(val, cmd);
-	if (ft_strcmp(cmd[0], "cd") == 0)
+	else if (ft_strcmp(cmd[0], "cd") == 0)
 		ft_cd(val->env, cmd[1]);
-	if (ft_strcmp(cmd[0], "unset") == 0)
+	else if (ft_strcmp(cmd[0], "unset") == 0)
 		ft_unset(val, cmd);
-	if (ft_strcmp(cmd[0], "exit") == 0)
+	else if (ft_strcmp(cmd[0], "exit") == 0)
 		exit(0);
-	return (true);
+	else
+		return ;
 }

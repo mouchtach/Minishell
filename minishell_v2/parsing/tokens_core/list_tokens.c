@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:19:30 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/06/21 16:22:40 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:26:40 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ static int	symbols_token(char **new_token, char *tokens, int i, t_token **head)
 		return (0);
 	if (tokens[i] == '|')
 		r++;
-	else if ((tokens[i] == '>' && tokens[i + 1] == '>') 
+	else if ((tokens[i] == '>' && tokens[i + 1] == '>')
 		|| (tokens[i] == '<' && tokens[i + 1] == '<'))
 		r += 2;
-	else if ((tokens[i] == '>' && tokens[i + 1] != '>') 
+	else if ((tokens[i] == '>' && tokens[i + 1] != '>')
 		|| (tokens[i] == '<' && tokens[i + 1] != '<'))
 		r++;
 	*new_token = malloc(sizeof(char) * (r + 1));
