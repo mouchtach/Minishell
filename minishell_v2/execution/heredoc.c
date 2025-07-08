@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:22:28 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 22:16:43 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:55:33 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,6 @@ void	ft_putstr_expane(t_list *env, char *line, int fd)
 	}
 }
 
-void	initialize_command_fds(t_cmd *cmd)
-{
-	cmd->fd_herdoc[0] = -1;
-	cmd->fd_herdoc[1] = -1;
-	cmd->fd_io[0] = -1;
-	cmd->fd_io[1] = -1;
-	cmd->fd_pip[0] = -1;
-	cmd->fd_pip[1] = -1;
-}
 
 void	herdoc_read(t_list *env, t_cmd *tmp, char *dlm, t_type expand)
 {
@@ -69,7 +60,7 @@ void	herdoc_read(t_list *env, t_cmd *tmp, char *dlm, t_type expand)
 		if (expand == D_HERDOC_Q)
 			ft_putstr_fd(line, tmp->fd_herdoc[1]);
 		else
-			ft_putstr_expane(env, line, tmp->fd_herdoc[1]);
+			resolve_heredoc(env, &line, tmp->fd_herdoc[1]);
 		free(line);
 	}
 	if (line)
@@ -93,6 +84,7 @@ bool	fork_and_handle_heredoc(t_shell *shell,
 	}
 	if (fork_pid == 0)
 	{
+		signal(SIGINT, signal_herdoc);
 		herdoc_read(shell->env, tmp, delimiter, expand);
 		cmdfree(tmp);
 		free_list(&shell->env);
@@ -100,7 +92,8 @@ bool	fork_and_handle_heredoc(t_shell *shell,
 	}
 	if (fork_pid > 0)
 	{
-		waitpid(fork_pid, NULL, 0);
+		if(wait_and_exit(fork_pid))
+			return (false);
 		close_fd(&tmp->fd_herdoc[1]);
 	}
 	return (true);
@@ -112,9 +105,9 @@ bool	process_heredocs(t_shell *val)
 	t_redirec	*redc;
 
 	tmp = val->list;
+	initialize_command_fds(tmp);
 	while (tmp)
 	{
-		initialize_command_fds(tmp);
 		redc = tmp->redirec;
 		while (redc)
 		{
@@ -125,7 +118,8 @@ bool	process_heredocs(t_shell *val)
 				if (pipe(tmp->fd_herdoc) == -1)
 					return (strerror(errno), false);
 				if (!fork_and_handle_heredoc(val, tmp, redc->name, redc->type))
-					return (false);
+					return (close_fd(&tmp->fd_herdoc[0]),
+							close_fd(&tmp->fd_herdoc[1]), false);
 			}
 			redc = redc->next;
 		}

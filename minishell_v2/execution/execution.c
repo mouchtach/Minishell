@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:52:21 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 14:50:25 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/07 17:01:50 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	execute_commands(t_shell *val)
 {
+	signal(SIGINT, SIG_IGN);
 	if (!process_heredocs(val))
 		return ;
 	if (!init_shell_fds(val))

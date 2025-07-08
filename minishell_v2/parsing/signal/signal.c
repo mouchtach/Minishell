@@ -1,43 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 20:17:36 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/06/21 15:47:18 by ymouchta         ###   ########.fr       */
+/*   Created: 2025/07/04 00:17:01 by mbarhoun          #+#    #+#             */
+/*   Updated: 2025/07/08 17:38:38 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static bool	is_spaces(char *input)
-{
-	int	r;
-	int	spc;
+// static void	sigint_handler(int sig)
+// {
+// 	(void)sig;
+// 	write(1, "\n", 1);
+// 	rl_on_new_line();
+// 	rl_replace_line("", 0);
+// 	rl_redisplay();
+// }
 
-	r = -1;
-	spc = 0;
-	while (input[++r])
-		if (is_space(input[r]))
-			spc++;
-	if (spc == ft_strlen(input))
-		return (1);
-	return (0);
-}
+// void	set_signals_main(void)
+// {
+// 	signal(SIGINT, sigint_handler);
+// 	signal(SIGQUIT, SIG_IGN);
+// }
 
-void	glance_input(char *input, t_list *env)
-{
-	if (!input)
-		exit(0);
-	if (!ft_strcmp(input, "exit"))
-	{
-		env_leaks(env);
-		printf("exit\n");
-		exit(0);
-	}
-	if (input[0] == '\0' || is_spaces(input))
-		return ;
-	add_history(input);
-}
+
+// void 	signal_herdoc()
+// {
+// 	write(1, "\n", 1);
+// 	exit(1);
+// }
+// void	set_signals_child(void)
+// {
+// 	signal(SIGINT, SIG_DFL);
+// 	signal(SIGQUIT, SIG_DFL);
+// }

@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 19:57:16 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 18:04:31 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:04:39 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,21 @@ void	export_new(char *str, t_shell *var)
 		free(key);
 }
 
-void	ft_export_variable(t_shell *var, char **cmd)
+int	ft_export_variable(t_shell *var, char **cmd)
 {
 	int	j;
 
 	j = 1;
 	if (!cmd[j])
+	{
 		sort_export(var->env);
+		return (0);
+	}
 	while (cmd[j])
 	{
 		export_new(cmd[j], var);
 		j++;
 	}
+	return (0);
+
 }

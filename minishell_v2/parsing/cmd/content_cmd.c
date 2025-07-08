@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   content_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:01:34 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/04 10:27:05 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/06 16:30:46 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ bool	hydrate_cmd(t_cmd **cmd, t_token *tokens)
 			else if (tokens->type_token != WORD)
 				if (!control_cmd(&l_var, &tmd->redirec, &tokens, &var.i))
 					return (0);
+			amb_next(tokens, tmd);
 			tokens = tokens->next;
 		}
 		tmd->cmd[var.r] = NULL;

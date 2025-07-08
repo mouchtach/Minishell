@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:06:24 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/06/01 11:57:00 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/07/06 16:33:54 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_token	*create_node(char *content)
 	node->content = content;
 	node->red = 0;
 	node->exp = 1;
+	node->amb = 0;
 	node->next = NULL;
 	return (node);
 }

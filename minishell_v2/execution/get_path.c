@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:50:09 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 10:14:26 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:25:58 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ char	*get_executable_paths(char **path, char *cmd)
 		}
 		free(join);
 	}
-	printf("%s : command not found\n", cmd);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	return (NULL);
 }
 

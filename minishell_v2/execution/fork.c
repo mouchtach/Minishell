@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:51:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 15:14:19 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:30:15 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ char	*check_if_exist_path(t_shell *val, t_cmd *cmd)
 		if (!access(cmd->cmd[0], X_OK))
 			return (ft_strdup(cmd->cmd[0]));
 		else
-			return (printf("minishell: %s: No such file or directory\n"
-					, cmd->cmd[0]), NULL);
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->cmd[0], 2);
+			return(ft_putstr_fd(": No such file or directory\n", 2), NULL);
+		}
 	}
 	return (get_executable_paths(full_path, cmd->cmd[0]));
 }
@@ -106,12 +109,14 @@ void	execute_with_fork(t_shell *val)
 		if (fork_pid < 0)
 			perror(FORK_FAILD);
 		if (fork_pid == 0)
+		{
+			set_signals_child();
 			child_process(val, list);
+		}
 		if (fork_pid > 0)
 			parent_process(list);
 		restore_standard_input(val);
 		list = list->next;
 	}
-	while (wait(NULL) > 0)
-		;
+	wait_and_exit(fork_pid);
 }

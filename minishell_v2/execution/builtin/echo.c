@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:06:47 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 09:52:29 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:00:31 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	check_n(char *parm)
 	return (false);
 }
 
-void	ft_echo(char **cmd)
+int 	ft_echo(char **cmd)
 {
 	int	i;
 	int	ck;
@@ -46,6 +46,7 @@ void	ft_echo(char **cmd)
 		i++;
 	}
 	if (ck == 1)
-		return ;
+		return (0);
 	printf("\n");
+	return (0);
 }

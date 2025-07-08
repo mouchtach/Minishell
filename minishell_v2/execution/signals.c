@@ -6,36 +6,37 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:36:03 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 22:16:52 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:53:35 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_sigint(int sig)
+static void	sigint_handler(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	rl_replace_line("", 0);
 	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void	restore_signals(void)
+void	set_signals_main(void)
 {
-	signal(SIGINT, handle_sigint);
+	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	handle_parent_heredoc_sigint(int sig)
-{
-	(void)sig;
-}
 
-void	herdoc_sig(void)
+void 	signal_herdoc()
 {
-	signal(SIGINT, handle_parent_heredoc_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	write(1, "\n", 1);
+	exit(1);
+}
+void	set_signals_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 /*

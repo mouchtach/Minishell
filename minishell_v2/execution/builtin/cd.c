@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:26:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 01:31:35 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:05:35 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,24 @@ char	*resolve_cd_path(char *str, t_list *env)
 		return (str);
 }
 
-void	ft_cd(t_list *env, char *path)
+int	ft_cd(t_list *env, char *path)
 {
 	char	*oldpwd;
 
 	oldpwd = getcwd(NULL, 0);
 	path = resolve_cd_path(path, env);
 	if (!oldpwd)
-		return (error_message(errno, path));
+		return (error_message(errno, path), 0);
 	if (chdir(path) == -1)
-		return (free(oldpwd), error_message(errno, path));
+		return (free(oldpwd), error_message(errno, path), 0);
 	if (!ft_strncmp(path, "~/", 2))
 		free(path);
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (free(oldpwd), error_message(errno, path));
+		return (free(oldpwd), error_message(errno, path), 0);
 	update_env("PWD", path, &env);
 	update_env("OLDPWD", oldpwd, &env);
 	free(path);
 	free(oldpwd);
+	return (0);
 }

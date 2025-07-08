@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:04:33 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/06/21 15:47:18 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:50:34 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static char	*env_value(char *key, t_list *env)
+char	*env_value(char *key, t_list *env)
 {
 	t_list	*tmp;
 	char	*value;
@@ -84,23 +84,26 @@ char	*key_value(char **content, char *v_env, int pos, int len_key)
 	return (value);
 }
 
-static int	expand_var(char **content, int pos, t_list *env, bool f_quotes)
+static int	expand_var(t_token **t, t_ambg amb, t_list *env, bool f_quotes)
 {
 	t_exp	exp;
 
-	set_var_exp(&exp.len_key, &exp.len_value, &exp.r, pos);
-	if (is_special((*content)[exp.r], f_quotes))
-		return (expand_meta(content, pos, exp.r, f_quotes));
-	while ((*content)[exp.r] && is_valid_key((*content)[exp.r]))
+	set_var_exp(&exp.len_key, &exp.len_value, &exp.r, amb.r);
+	if (is_special((*t)->content[exp.r], f_quotes))
+		return (expand_meta(&(*t)->content, amb.r, exp.r, f_quotes));
+	while ((*t)->content[exp.r] && is_valid_key((*t)->content[exp.r]))
 		increment(&exp.r, &exp.len_key);
-	exp.key = cdup(exp.len_key, *content + (pos + 1));
+	exp.key = cdup(exp.len_key, (*t)->content + (amb.r + 1));
 	exp.value = env_value(exp.key, env);
-	if (!exp.value && (*content)[pos + 1] == '\'' && f_quotes)
+	if (!exp.value && (*t)->content[amb.r + 1] == '\'' && f_quotes)
 		return (p1char(&exp.key), 1);
 	if (!exp.value)
-		*content = key_not_found(content, pos, exp.len_key);
+	{
+		ambiguous_redirect(t, amb.ambiguous, exp.key);
+		(*t)->content = key_not_found(&(*t)->content, amb.r, exp.len_key);
+	}
 	else
-		*content = key_value(content, exp.value, pos, exp.len_key + 1);
+		set_new_content(t, &exp, &amb);
 	free(exp.key);
 	if (exp.value)
 	{
@@ -110,30 +113,29 @@ static int	expand_var(char **content, int pos, t_list *env, bool f_quotes)
 	return (exp.len_value);
 }
 
-void	is_env(char **content, t_list *env, bool expander)
+void	is_env(t_token **token, t_list *env, bool expander, bool ambg)
 {
-	bool	d_quotes;
-	bool	s_quotes;
-	int		r;
+	t_ambg	amb;
 
-	d_quotes = 0;
-	s_quotes = 0;
-	r = 0;
-	while ((*content)[r])
+	amb.d_quotes = 0;
+	amb.s_quotes = 0;
+	amb.ambiguous = ambg;
+	amb.r = 0;
+	while ((*token)->content[amb.r])
 	{
-		if ((*content)[r] == '"' && d_quotes)
-			change_value(&d_quotes, 0);
-		else if ((*content)[r] == '\'' && s_quotes)
-			change_value(&s_quotes, 0);
-		else if ((*content)[r] == '"' && !s_quotes)
-			change_value(&d_quotes, 1);
-		else if ((*content)[r] == '\'' && !d_quotes)
-			change_value(&s_quotes, 1);
-		else if ((*content)[r] == '$' && !s_quotes && expander)
+		if ((*token)->content[amb.r] == '"' && amb.d_quotes)
+			change_value(&amb.d_quotes, 0);
+		else if ((*token)->content[amb.r] == '\'' && amb.s_quotes)
+			change_value(&amb.s_quotes, 0);
+		else if ((*token)->content[amb.r] == '"' && !amb.s_quotes)
+			change_value(&amb.d_quotes, 1);
+		else if ((*token)->content[amb.r] == '\'' && !amb.d_quotes)
+			change_value(&amb.s_quotes, 1);
+		else if ((*token)->content[amb.r] == '$' && !amb.s_quotes && expander)
 		{
-			r += expand_var(content, r, env, d_quotes);
+			amb.r += expand_var(token, amb, env, amb.d_quotes);
 			continue ;
 		}
-		r++;
+		amb.r++;
 	}
 }

@@ -17,7 +17,8 @@ LIB		= ./libft/libft.a
 
 # Source files
 SRC =	minishell.c									\
-		./parsing/input/input.c						\
+		./parsing/history/history.c					\
+		./parsing/signal/signal.c					\
 		./parsing/asm_cmd.c							\
 		./parsing/tokens_core/list_tokens.c			\
 		./parsing/tokens_core/refactor_tokens.c		\
@@ -27,8 +28,11 @@ SRC =	minishell.c									\
 		./parsing/tokens_core/utils3_tokens.c		\
 		./parsing/envp/env_expander.c				\
 		./parsing/envp/env_list.c					\
+		./parsing/envp/env_split.c					\
 		./parsing/envp/exp_special.c				\
+		./parsing/envp/env_heredoc.c				\
 		./parsing/envp/utils_env.c					\
+		./parsing/envp/utils1_env.c					\
 		./parsing/envp/env_leaks.c					\
 		./parsing/cmd/list_cmd.c					\
 		./parsing/cmd/utils_cmd.c					\
@@ -59,6 +63,7 @@ SRC =	minishell.c									\
 		./execution/list_utils.c					\
 		./execution/leaks_mem.c						\
 		./execution/leaks_fd.c						\
+		./execution/exit_status.c					\
 
 HDR =	minishell.h					\
 		./parsing/include/syntax.h	\

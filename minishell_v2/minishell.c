@@ -6,11 +6,14 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 22:19:39 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 22:14:40 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:51:50 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+
+int	exit_status;
+
 
 char	*rd_line(t_list *env)
 {
@@ -26,7 +29,7 @@ char	*rd_line(t_list *env)
 		printf("exit\n");
 		exit(0);
 	}
-	glance_input(rd_line, env);
+	history_input(rd_line);
 	return (rd_line);
 }
 
@@ -37,12 +40,13 @@ int	main(int ac, char **av, char **ev)
 
 	(void)ac;
 	(void)av;
-	signal(SIGINT, handle_sigint);
+	// signal(SIGINT, handle_sigint);
 	shell = malloc(sizeof(t_shell));
-	shell->exit_status = 0;
+	exit_status = 0;
 	shell->env = environment(ev);
 	while (1)
 	{
+		set_signals_main();
 		buffer = rd_line(shell->env);
 		shell->list = assemble_command(buffer, shell->env);
 		if (!shell->list)

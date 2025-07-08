@@ -6,11 +6,28 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:17:44 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 14:50:40 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:56:02 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	initialize_command_fds(t_cmd *cmd)
+{
+	t_cmd	*current;
+
+	current = cmd;
+	while(current)
+	{
+		current->fd_herdoc[0] = -1;
+		current->fd_herdoc[1] = -1;
+		current->fd_io[0] = -1;
+		current->fd_io[1] = -1;
+		current->fd_pip[0] = -1;
+		current->fd_pip[1] = -1;
+		current = current->next;
+	}
+}
 
 void	close_fd(int *fd)
 {

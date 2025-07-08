@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 20:38:23 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 18:02:34 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:08 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	remove_env_node(t_shell *val, t_list *curr)
 	}
 }
 
-void	ft_unset(t_shell *val, char **cmd)
+int	ft_unset(t_shell *val, char **cmd)
 {
 	int		j;
 	t_list	*curr;
@@ -49,4 +49,5 @@ void	ft_unset(t_shell *val, char **cmd)
 		}
 		j++;
 	}
+	return (0);
 }
