@@ -18,7 +18,6 @@ LIB		= ./libft/libft.a
 # Source files
 SRC =	minishell.c									\
 		./parsing/history/history.c					\
-		./parsing/signal/signal.c					\
 		./parsing/asm_cmd.c							\
 		./parsing/tokens_core/list_tokens.c			\
 		./parsing/tokens_core/refactor_tokens.c		\

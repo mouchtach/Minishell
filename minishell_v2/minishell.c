@@ -6,14 +6,13 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 22:19:39 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/08 17:51:50 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 23:10:09 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 int	exit_status;
-
 
 char	*rd_line(t_list *env)
 {
@@ -40,7 +39,6 @@ int	main(int ac, char **av, char **ev)
 
 	(void)ac;
 	(void)av;
-	// signal(SIGINT, handle_sigint);
 	shell = malloc(sizeof(t_shell));
 	exit_status = 0;
 	shell->env = environment(ev);

@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:37:36 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/08 17:44:12 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 23:23:39 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	expand_meta(char **content, int pos, int r, bool f_quotes)
 	if ((*content)[r] == '?')
 	{
 		sval = ft_itoa(exit_status);
-		return (*content = key_value(content, sval, pos, 2), \
-				p1char(&sval), ft_strlen("0"));
+		return (*content = key_value(content, sval, pos, 2),
+			p1char(&sval), ft_strlen("0"));
 	}
 	return (1);
 }

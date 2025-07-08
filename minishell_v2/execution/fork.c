@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:51:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/08 19:30:15 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 23:10:35 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*check_if_exist_path(t_shell *val, t_cmd *cmd)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->cmd[0], 2);
-			return(ft_putstr_fd(": No such file or directory\n", 2), NULL);
+			return (ft_putstr_fd(": No such file or directory\n", 2), NULL);
 		}
 	}
 	return (get_executable_paths(full_path, cmd->cmd[0]));

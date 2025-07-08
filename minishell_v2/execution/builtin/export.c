@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 19:57:16 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/08 19:04:39 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 23:22:45 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,37 +67,54 @@ void	sort_export(t_list *var)
 	free_list(&new);
 }
 
-void	export_new(char *str, t_shell *var)
+char	*parss_value(char *str, bool *eg)
 {
 	int		i;
-	bool	eg;
 	char	*value;
-	char	*key;
 
 	i = 0;
-	eg = false;
 	while (str[i] && str[i] != '=')
 		i++;
 	if (str[i] == '=')
 	{
 		value = ft_strdup(str + i + 1);
-		eg = true;
+		*eg = true;
 	}
 	else
 		value = ft_strdup(str + i);
-	key = ft_substr(str, 0, i);
+	return (value);
+}
+
+int	export_new(char *str, t_shell *var)
+{
+	bool	eg;
+	char	*value;
+	char	*key;
+
+	eg = false;
+	value = parss_value(str, &eg);
+	key = get_valide_key(str);
+	if (!key)
+	{
+		free(value);
+		printf("export: `%s': not a valid identifier\n", str);
+		return (1);
+	}
 	add_export_list(&var->env, value, key, eg);
 	if (value)
 		free(value);
 	if (key)
 		free(key);
+	return (0);
 }
 
 int	ft_export_variable(t_shell *var, char **cmd)
 {
 	int	j;
+	int	ret;
 
 	j = 1;
+	ret = 0;
 	if (!cmd[j])
 	{
 		sort_export(var->env);
@@ -105,9 +122,9 @@ int	ft_export_variable(t_shell *var, char **cmd)
 	}
 	while (cmd[j])
 	{
-		export_new(cmd[j], var);
+		if (export_new(cmd[j], var))
+			ret = 1;
 		j++;
 	}
-	return (0);
-
+	return (ret);
 }

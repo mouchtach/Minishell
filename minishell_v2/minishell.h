@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/08 19:06:13 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 23:27:21 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@
 # define GET_LINE "minishell get next line faild"
 # define ERR_MEM "minishell alloc"
 
-extern int exit_status;
-
+extern int				exit_status;
 typedef enum s_type
 {
 	WORD,
@@ -254,21 +253,22 @@ void					execute_with_fork(t_shell *val);
 // built_in
 void					execute_builtin(char **cmd, t_shell *val);
 int						is_builtin(char *cmd);
-void					ft_exit(t_shell **shell);
+int						ft_exit(char **cmd, t_shell **shell);
 //	//export
 void					add_export_list(t_list **env, char *value, char *key,
 							bool eg);
 void					sort_export(t_list *var);
-void					export_new(char *str, t_shell *var);
+int						export_new(char *str, t_shell *var);
 int						ft_export_variable(t_shell *var, char **cmd);
 //	//export_utils
+char					*get_valide_key(char *str);
 t_list					*ft_copy_env(t_list *env);
 void					swap_nodes(t_list *node1, t_list *node2);
 void					desplay_list_export(t_list *list);
 //	//cd
 char					*resolve_cd_path(char *str, t_list *env);
 void					update_env(char *key, char *value, t_list **env);
-int 					ft_cd(t_list *env, char *path);
+int						ft_cd(t_list *env, char *path);
 char					*get_value(t_list *env, char *key);
 //	//echo
 int						ft_echo(char **cmd);
@@ -295,13 +295,10 @@ void					cleanup_shell(t_shell **shell);
 void					clear_all_pipes(t_cmd *cmd);
 void					close_fd(int *fd);
 void					initialize_command_fds(t_cmd *cmd);
-
 //signals
-void	set_signals_child(void);
-void 	signal_herdoc();
-void	set_signals_main(void);
-
+void					set_signals_child(void);
+void					signal_herdoc(int sig);
+void					set_signals_main(void);
 //exit status
-bool    wait_and_exit(int pid);
-
+bool					wait_and_exit(int pid);
 #endif

@@ -6,11 +6,27 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 01:24:56 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 01:28:45 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 23:18:02 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+char	*get_valide_key(char *str)
+{
+	int		i;
+	char	*key;
+
+	i = 0;
+	if (str[i] != '_' && !ft_isalpha(str[i]))
+		return (NULL);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+		i++;
+	key = ft_substr(str, 0, i);
+	if (!key)
+		return (NULL);
+	return (key);
+}
 
 void	desplay_list_export(t_list *list)
 {

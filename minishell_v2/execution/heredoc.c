@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:22:28 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/08 18:55:33 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 23:11:22 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	ft_putstr_expane(t_list *env, char *line, int fd)
 		i++;
 	}
 }
-
 
 void	herdoc_read(t_list *env, t_cmd *tmp, char *dlm, t_type expand)
 {
@@ -92,7 +91,7 @@ bool	fork_and_handle_heredoc(t_shell *shell,
 	}
 	if (fork_pid > 0)
 	{
-		if(wait_and_exit(fork_pid))
+		if (wait_and_exit(fork_pid))
 			return (false);
 		close_fd(&tmp->fd_herdoc[1]);
 	}
@@ -119,7 +118,7 @@ bool	process_heredocs(t_shell *val)
 					return (strerror(errno), false);
 				if (!fork_and_handle_heredoc(val, tmp, redc->name, redc->type))
 					return (close_fd(&tmp->fd_herdoc[0]),
-							close_fd(&tmp->fd_herdoc[1]), false);
+						close_fd(&tmp->fd_herdoc[1]), false);
 			}
 			redc = redc->next;
 		}
