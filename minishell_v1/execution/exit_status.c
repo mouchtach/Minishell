@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 17:24:27 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/08 23:13:42 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:34:25 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ bool	wait_and_exit(int last_pid)
 		{
 			if (WIFEXITED(status))
 			{
-				exit_status = WEXITSTATUS(status);
-				if (exit_status == 1)
+				g_exit_status = WEXITSTATUS(status);
+				if (g_exit_status == 1)
 					return (true);
 			}
 			else if (WIFSIGNALED(status))
 			{
-				exit_status = status_scan(&status);
+				g_exit_status = status_scan(&status);
 			}
 		}
 	}

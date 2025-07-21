@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:49:22 by macbookpro        #+#    #+#             */
-/*   Updated: 2025/07/08 23:15:09 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:34:25 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,19 @@ int	print_env_list(t_list *env)
 void	execute_builtin(char **cmd, t_shell *val)
 {
 	if (ft_strcmp(cmd[0], "echo") == 0)
-		exit_status = ft_echo(cmd);
+		g_exit_status = ft_echo(cmd);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		exit_status = ft_pwd(val->env);
+		g_exit_status = ft_pwd(val->env);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		exit_status = print_env_list(val->env);
+		g_exit_status = print_env_list(val->env);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		exit_status = ft_export_variable(val, cmd);
+		g_exit_status = ft_export_variable(val, cmd);
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		exit_status = ft_cd(val->env, cmd[1]);
+		g_exit_status = ft_cd(val->env, cmd[1]);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		exit_status = ft_unset(val, cmd);
+		g_exit_status = ft_unset(val, cmd);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		exit_status = ft_exit(cmd, &val);
+		g_exit_status = ft_exit(cmd, &val);
 	else
 		return ;
 }

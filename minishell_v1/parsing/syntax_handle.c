@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azhar <azhar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:50:24 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/21 14:00:37 by azhar            ###   ########.fr       */
+/*   Updated: 2025/07/21 19:34:25 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,18 @@ int	syntax_error(char *line)
 {
 	if (handle_pipe(line))
 	{
-		exit_status = 2;
+		g_exit_status = 2;
 		return (printf("minishell: syntax error near unexpected token `|'\n"),
 			1);
 	}
 	if (handle_quotes(line))
 	{
-		exit_status = 2;
+		g_exit_status = 2;
 		return (printf("minishell: quoting error\n"), 1);
 	}
 	if (handle_redir(line))
 	{
-		exit_status = 2;
+		g_exit_status = 2;
 		return (1);
 	}
 	return (0);

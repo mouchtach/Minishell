@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils_c.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azhar <azhar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:20:51 by azhar             #+#    #+#             */
-/*   Updated: 2025/07/20 23:33:06 by azhar            ###   ########.fr       */
+/*   Updated: 2025/07/21 19:34:25 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	handle_special_variables(char *token, t_exp *exp)
 	}
 	if (token[exp->i + 1] == '?')
 	{
-		exit_status_str = ft_itoa(exit_status);
+		exit_status_str = ft_itoa(g_exit_status);
 		if (!exit_status_str)
 			return (exp->result[exp->j++] = '0', exp->i += 2, 1);
 		ft_strlcpy(exp->result + exp->j, exit_status_str,

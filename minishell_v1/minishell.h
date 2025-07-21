@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/21 19:16:35 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:34:25 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define GET_LINE "minishell get next line faild"
 # define ERR_MEM "minishell alloc"
 
-extern int				exit_status;
+extern int				g_exit_status;
 typedef enum s_type
 {
 	WORD,
@@ -135,7 +135,7 @@ typedef struct s_shell
 	t_cmd				*list;
 	t_list				*env;
 	int					std_backup[2];
-	int					exit_status;
+	int					g_exit_status;
 }						t_shell;
 
 typedef struct s_spl
@@ -299,7 +299,7 @@ int						contains_only_quotes_and_spaces(char *cmd_str);
 
 // void						set_signals_main(void);
 // void						set_signals_child(void);
-// int						exit_status(int val);
+// int						g_exit_status(int val);
 // int						control_g(bool option, bool value);
 
 // EXECUTION
