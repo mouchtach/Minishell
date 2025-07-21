@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:51:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 19:20:52 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:53:18 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	child_process(t_shell *val, t_cmd *cmd)
 		exit(1);
 	if (!duplicate_standard_fds(cmd))
 		exit(1);
-	cleanup_shell_fds(val);
 	if (is_builtin(cmd->cmd[0]))
 		return (execute_builtin(cmd->cmd, val), exit(0));
 	else
@@ -127,7 +126,6 @@ void	execute_with_fork(t_shell *val)
 		}
 		if (fork_pid > 0)
 			parent_process(list);
-		restore_standard_input(val);
 		list = list->next;
 	}
 	wait_and_exit(fork_pid);

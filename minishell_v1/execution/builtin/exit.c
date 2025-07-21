@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:22:52 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 19:34:25 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:30:37 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_exit(char **cmd, t_shell **shell)
 	printf("exit\n");
 	if (cmd && cmd[1])
 	{
-		if (cmd[2])
+		if (cmd[2] && ft_is_numeric(cmd[1]))
 		{
 			printf("minishell: exit: too many arguments\n");
 			return (1);

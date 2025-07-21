@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:58:48 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 19:10:37 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:34:00 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ void	add_default_env(t_list **list)
 	if (!get_value(*list, "_"))
 		list_add_back(list, list_new_node("/usr/bin/env", "_", true));
 	if (!get_value(*list, "OLDPWD"))
-		list_add_back(list, list_new_node("", "OLDPWD", false));
+		list_add_back(list, list_new_node(NULL, "OLDPWD", false));
 }

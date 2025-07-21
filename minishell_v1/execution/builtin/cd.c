@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:26:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 19:12:25 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:45:07 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ int	ft_cd(t_list *env, char *path)
 	char	*oldpwd;
 	char	*p;
 
+	p = NULL;
 	oldpwd = getcwd(NULL, 0);
-	p = resolve_cd_path(path, env);
 	if (!oldpwd)
 		return (error_message(errno, p, "cd"), 1);
+	p = resolve_cd_path(path, env);
+	if (!p)
+		return (free(oldpwd), 1);
 	if (chdir(p) == -1)
 		return (free(oldpwd), error_message(errno, p, "cd"), 1);
 	if (!ft_strncmp(path, "~/", 2))
@@ -92,6 +95,8 @@ int	ft_cd(t_list *env, char *path)
 		return (free(oldpwd), error_message(errno, p, "cd"), 1);
 	update_env("PWD", p, &env);
 	update_env("OLDPWD", oldpwd, &env);
+	if (!ft_strcmp(path, "-"))
+		printf("%s\n", p);
 	free(p);
 	free(oldpwd);
 	return (0);

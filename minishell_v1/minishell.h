@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/21 19:34:25 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:18:23 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,7 +326,6 @@ bool					duplicate_standard_fds(t_cmd *cmd);
 int						ft_unset(t_shell *val, char **cmd);
 // std
 bool					init_shell_fds(t_shell *shell);
-void					cleanup_shell_fds(t_shell *shell);
 bool					restore_standard_input(t_shell *shell);
 // fork
 void					child_process(t_shell *val, t_cmd *cmd);

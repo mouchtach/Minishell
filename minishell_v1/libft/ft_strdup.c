@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:07:04 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/04 10:18:14 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:35:01 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	ma = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!ma)
 		return (strerror(errno), NULL);

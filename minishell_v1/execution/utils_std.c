@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:49:58 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 00:56:05 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:17:11 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,15 @@ bool	init_shell_fds(t_shell *shell)
 	return (true);
 }
 
-void	cleanup_shell_fds(t_shell *shell)
-{
-	close(shell->std_backup[0]);
-	close(shell->std_backup[1]);
-}
+
 
 bool	restore_standard_input(t_shell *shell)
 {
 	if (dup2(shell->std_backup[0], STDIN_FILENO) == -1)
 		return (strerror(errno), false);
+	close(shell->std_backup[0]);
 	if (dup2(shell->std_backup[1], STDOUT_FILENO) == -1)
 		return (strerror(errno), false);
+	close(shell->std_backup[1]);
 	return (true);
 }

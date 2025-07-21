@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:22:28 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 19:11:31 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:20:49 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	herdoc_read(t_shell *shell, t_cmd *tmp, char *dlm, t_type expand)
 	dlm = ft_strjoin(dlm, "\n");
 	if (!dlm)
 		return ;
+	close(tmp->fd_herdoc[0]);
 	while (1)
 	{
 		ft_putstr_fd("> ", 1);
@@ -65,7 +66,6 @@ void	herdoc_read(t_shell *shell, t_cmd *tmp, char *dlm, t_type expand)
 	if (line)
 		free(line);
 	free(dlm);
-	close(tmp->fd_herdoc[0]);
 	close(tmp->fd_herdoc[1]);
 }
 
@@ -91,9 +91,9 @@ bool	fork_and_handle_heredoc(t_shell *shell, t_cmd *tmp, char *delimiter,
 	}
 	if (fork_pid > 0)
 	{
+		close_fd(&tmp->fd_herdoc[1]);
 		if (wait_and_exit(fork_pid))
 			return (false);
-		close_fd(&tmp->fd_herdoc[1]);
 	}
 	return (true);
 }
