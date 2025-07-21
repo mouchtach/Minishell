@@ -1,66 +1,86 @@
-NAME = minishell
-HEADER = minishell.h
-CC = cc
-LDLIBS = -lreadline
-CFLAGS = -Wall -Wextra -Werror
-LIBFT = ./libft/libft.a
-SRC =	minishell.c \
-		./parssing/parse_redir.c \
-		./parssing/redirection.c \
-		./parssing/syntax_handle.c \
-		./parssing/utils_a.c \
-		./parssing/utils_b.c \
-		./builtin/built_in.c \
-		./builtin/cd.c \
-		./builtin/echo.c \
-		./builtin/export.c \
-		./execution/execution.c \
-		./execution/fork.c \
-		./execution/get_next_line.c \
-		./execution/redirections.c \
-		./execution/utils_std.c \
-		./execution/get_path.c \
-		./execution/heredoc.c \
-		./execution/clean.c \
-		./execution/set_env.c \
+NAME	= minishell
 
-OBJS = $(SRC:.c=.o)
+CC		= cc
 
-########### colors
-DEF_COLOR = \033[0;39m
-GRAY = \033[0;90m
-RED = \033[0;91m
-GREEN = \033[1;92m
-YELLOW = \033[1;93m
-BLUE = \033[1;94m
-MAGENTA = \033[0;95m
-CYAN = \033[0;96m
-WHITE = \033[0;97m
+READLINE_DIR = $(shell brew --prefix readline)
 
+CFLAGS	= -Wall -Wextra -Werror -I$(READLINE_DIR)/include
 
+LDFLAGS	= -L$(READLINE_DIR)/lib
 
-all : $(NAME)
+RFLG	= -lreadline -lncurses
 
-$(NAME): $(LIBFT) $(OBJS) 
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(LDLIBS)
-	@echo "$(GREEN)$(NAME) compiled successfully!$(DEF_COLOR)"
+LIB		= ./libft/libft.a
 
-%.o: %.c $(HEADER)
-	@echo "$(GREEN)C o m p i l i n g $< ...$(DEF_COLOR)"
-	@${CC} ${CFLAGS} -c $< -o $@
+# Source files
+SRC =	minishell.c										\
+		./parsing/h_exp.c								\
+		./parsing/h_exp_utils.c							\
+		./parsing/parsing.c								\
+		./parsing/init_structs.c						\
+		./parsing/cleanup.c								\
+		./parsing/redirecting/parse_redir.c 			\
+		./parsing/redirecting/parse_redir_utils.c 		\
+		./parsing/redirecting/parse_redir_utils_b.c 	\
+		./parsing/redirecting/redirection.c 			\
+		./parsing/utils/utils_a.c 						\
+		./parsing/utils/utils_b.c 						\
+		./parsing/utils/utils_c.c 						\
+		./parsing/expansion/pre_expand.c				\
+		./parsing/expansion/expansion.c 				\
+		./parsing/expansion/expansion_utils.c 			\
+		./parsing/expansion/expansion_utils_b.c 		\
+		./parsing/expansion/expansion_utils_c.c 		\
+		./parsing/special_split.c 						\
+		./parsing/syntax_handle.c 						\
+		./execution/builtin/built_in.c					\
+		./execution/builtin/cd.c						\
+		./execution/builtin/unset.c						\
+		./execution/builtin/echo.c						\
+		./execution/builtin/exit.c						\
+		./execution/builtin/export.c					\
+		./execution/builtin/export_utils.c				\
+		./execution/execution.c							\
+		./execution/fork.c								\
+		./execution/get_next_line.c						\
+		./execution/redirections.c						\
+		./execution/utils_std.c							\
+		./execution/get_path.c							\
+		./execution/heredoc.c							\
+		./execution/error.c								\
+		./execution/signals.c							\
+		./execution/environment.c						\
+		./execution/environment_utils.c					\
+		./execution/list_utils.c						\
+		./execution/leaks_mem.c							\
+		./execution/leaks_fd.c							\
+		./execution/exit_status.c						\
 
-$(LIBFT):
-	@echo "$(BLUE)Compiling the Library LIBFT ...$(DEF_COLOR)"
-	@make -C ./libft
+HDR =	minishell.h										\
+		./parsing/include/syntax.h						\
+		./libft/libft.h									\
+
+OBJ = $(SRC:.c=.o)
+
+all: libft $(NAME)
+
+libft:
+	$(MAKE) -C ./libft
+
+$(NAME): $(OBJ) $(LIB)
+	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(LDFLAGS) -o $@ $(RFLG)
+
+%.o: %.c $(HDR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "$(YELLOW)Cleaning object files...$(DEF_COLOR)"
-	@rm -f $(OBJS)
-	@make clean -C ./libft
+	rm -f $(OBJ)
+	$(MAKE) -C ./libft clean
 
 fclean: clean
-	@echo "$(RED)Cleaning all files...$(DEF_COLOR)"
-	@rm -f $(NAME)
-	@make fclean -C ./libft
+	rm -f $(NAME)
+	$(MAKE) -C ./libft fclean
 
 re: fclean all
+
+.PHONY: all libft clean fclean re

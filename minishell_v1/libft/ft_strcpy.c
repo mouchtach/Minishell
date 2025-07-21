@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azhar <azhar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 17:39:11 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/05/27 13:43:31 by mbarhoun         ###   ########.fr       */
+/*   Created: 2025/07/17 11:38:51 by azmakhlo          #+#    #+#             */
+/*   Updated: 2025/07/20 21:57:10 by azhar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
+	char	*ptr;
+
+	ptr = dst;
+	while (*src)
+		*ptr++ = *src++;
+	*ptr = '\0';
+	return (dst);
 }

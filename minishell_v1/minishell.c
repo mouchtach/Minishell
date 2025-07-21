@@ -5,74 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 16:51:02 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/06/21 10:53:06 by ymouchta         ###   ########.fr       */
+/*   Created: 2025/07/03 22:19:39 by ymouchta          #+#    #+#             */
+/*   Updated: 2025/07/21 19:01:16 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./minishell.h"
 
-void	free_cmd_list(t_cmd *token)
+int		exit_status;
+
+static void	clean_resources(t_shell *var, char *line)
 {
-	t_cmd	*next;
-
-	while (token)
-	{
-		next = token->next;
-		free_cmd_node(token);
-		token = next;
-	}
+	free_cmd_list(var->list);
+	free(line);
 }
 
-int	process_line(char *line, t_cmd **token_ptr)
+void	handle_exit_on_eof(t_shell *var)
 {
-	if (ft_strlen(line) <= 0)
-		return (0);
-	add_history(line);
-	*token_ptr = tokenization(line);
-	return (0);
+	rl_clear_history();
+	free_list(&var->env);
+	free(var);
+	exit(0);
 }
 
-void ft_handler(int arg)
-{
-	(void)arg;
-	printf("ctrl c not work");
-}
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
-	t_shell	*var = malloc(sizeof(t_shell));
+	t_shell	*var;
 
+	var = malloc(sizeof(t_shell));
+	init_shell_fds(var);
 	(void)av;
-
-	signal(SIGINT, ft_handler);
 	if (ac != 1)
 		return (1);
-    // set_env();
-    var->env =  set_env(env);
-    var->path = set_path(var->env);
+	var->env = environment(env);
+	exit_status = 0;
 	while (1)
 	{
+		set_signals_main();
 		var->list = NULL;
 		line = readline("minishell> ");
-		if(line == NULL)
+		if (!line)
+			handle_exit_on_eof(var);
+		if (parse_input(line, var) != 0)
 		{
-			printf("\n");
-			exit(0);
-		}
-		if (process_line(line, &var->list) != 0)
-			return (1);
-		if (syntax_error(line))
-			free_cmd_list(var->list);
-		else if (var->list)
-		{
-			print_cmd_list(var->list);
-            start_execution(var);
-
-			free_cmd_list(var->list);
-		}
-		else
 			free(line);
+			continue ;
+		}
+		execute_commands(var);
+		clean_resources(var, line);
 	}
 }
-

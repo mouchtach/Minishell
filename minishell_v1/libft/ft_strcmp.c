@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 09:46:15 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 10:18:31 by ymouchta         ###   ########.fr       */
+/*   Created: 2025/05/20 19:56:02 by mbarhoun          #+#    #+#             */
+/*   Updated: 2025/07/21 17:01:31 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int					i;
-	int					x;
-	unsigned long long	t;
+	if (!s1 || !s2)
+		return (-1);
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
 	i = 0;
-	x = 1;
-	t = 0;
-	while ((str[i] <= 13 && str[i] >= 9) || str[i] == 32)
+	if (!s1 || !s2)
+		return (-1);
+	while (n > i && s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			x = -x;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		t = (t * 10) + (str[i] - 48);
-		i++;
-	}
-	return ((int)(t * x));
+	if (n == i)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

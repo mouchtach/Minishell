@@ -1,38 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 09:46:15 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 10:18:31 by ymouchta         ###   ########.fr       */
+/*   Created: 2025/06/20 20:06:47 by ymouchta          #+#    #+#             */
+/*   Updated: 2025/07/21 17:02:54 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-int	ft_atoi(const char *str)
+static bool	check_n(char *parm)
 {
-	int					i;
-	int					x;
-	unsigned long long	t;
+	int	i;
 
 	i = 0;
-	x = 1;
-	t = 0;
-	while ((str[i] <= 13 && str[i] >= 9) || str[i] == 32)
+	if (parm[i] == '-')
 		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (parm[i] == 'n')
+		i++;
+	if (parm[i] == '\0' && i >= 2)
+		return (true);
+	return (false);
+}
+
+int	ft_echo(char **cmd)
+{
+	int	i;
+	int	ck;
+
+	i = 1;
+	ck = 0;
+	while (cmd[i] && check_n(cmd[i]))
 	{
-		if (str[i] == '-')
-			x = -x;
+		ck = 1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (cmd[i])
 	{
-		t = (t * 10) + (str[i] - 48);
+		ft_putstr_fd(cmd[i], 1);
+		if (cmd[i + 1])
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
-	return ((int)(t * x));
+	if (ck == 1)
+		return (0);
+	ft_putstr_fd("\n", 1);
+	return (0);
 }

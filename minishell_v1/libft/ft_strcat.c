@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azhar <azhar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 17:39:11 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/05/27 13:43:31 by mbarhoun         ###   ########.fr       */
+/*   Created: 2025/05/15 09:20:51 by mbarhoun          #+#    #+#             */
+/*   Updated: 2025/07/21 12:48:25 by azhar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+char	*ft_strcat(char *dest, const char *src)
 {
-	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
+	char	*ptr;
+
+	ptr = dest + ft_strlen(dest);
+	while (*src)
+		*ptr++ = *src++;
+	*ptr = '\0';
+	return (dest);
 }

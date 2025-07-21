@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 13:44:21 by azmakhlo          #+#    #+#             */
-/*   Updated: 2024/11/17 19:01:32 by azmakhlo         ###   ########.fr       */
+/*   Created: 2024/10/27 10:06:02 by mbarhoun          #+#    #+#             */
+/*   Updated: 2025/06/28 13:10:13 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*p;
-	size_t	i;
+	char	*ma;
+	size_t	mlen;
+	size_t	b;
 
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s))
+	mlen = ft_strlen(s);
+	b = 0;
+	if (start >= (unsigned int)mlen)
 		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	p = (char *)malloc (sizeof(char) * (len + 1));
-	if (!p)
-		return (NULL);
-	i = 0;
-	while (s[start + i] && i < len)
+	if (len > mlen - start)
+		len = mlen - start;
+	ma = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ma)
+		return (strerror(errno), NULL);
+	while (b < len)
 	{
-		p[i] = s[start + i];
-		i++;
+		ma[b] = s[start + b];
+		b++;
 	}
-	p[i] = '\0';
-	return (p);
+	ma[b] = '\0';
+	return (ma);
 }

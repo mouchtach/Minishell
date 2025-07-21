@@ -6,43 +6,46 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:50:09 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/28 18:09:01 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:25:58 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_path_cmd(char **path, char *cmd)
+char	*get_executable_paths(char **path, char *cmd)
 {
 	int		i;
 	char	*join;
 	char	*tmp;
 
 	i = 0;
-	while (path[i])
+	if (path && *cmd)
 	{
-		join = ft_strjoin("/", cmd);  //   /ls      
-		tmp = ft_strdup(join);  //  /bin 
+		while (path[i])
+		{
+			join = ft_strjoin("/", cmd);
+			tmp = ft_strdup(join);
+			free(join);
+			join = ft_strjoin(path[i], tmp);
+			free(tmp);
+			if (access(join, X_OK) == 0)
+				return (join);
+			i++;
+		}
 		free(join);
-		join = ft_strjoin(path[i], tmp);
-		free(tmp);
-		if (access(join, X_OK) == 0) 
-			return (join);
-		i++;
 	}
-	free(join);
-	printf("%s : command not found\n", cmd);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	return (NULL);
 }
 
-char **set_path(t_list *v)
+char	**get_system_paths(t_list *v)
 {
-    t_list *tmp;
+	char	*value;
 
-    tmp = v;
-    if(!tmp)
-        return (NULL);
-    while(ft_strcmp(tmp->key, "PATH"))
-        tmp = tmp->next;
-    return(ft_split(tmp->value, ':'));
+	value = get_value(v, "PATH");
+	if (!value)
+		return (NULL);
+	return (ft_split(value, ':'));
 }

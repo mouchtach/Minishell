@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 00:23:44 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/05/13 23:48:15 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/04 01:09:19 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*extra_line(char **line)
 		i++;
 	dst = malloc(i + 1);
 	if (!dst)
-		return (NULL);
+		return (strerror(errno), NULL);
 	ft_cpy(&dst, line);
 	temp = ft_strdup((*line) + i);
 	if (!temp)
@@ -73,12 +73,12 @@ static char	*ft_get_line(int fd, char **line)
 
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
-		return (ft_free(line));
+		return (strerror(errno), ft_free(line));
 	while (1)
 	{
 		nb = read(fd, buffer, BUFFER_SIZE);
-		if (nb < 0)
-			return (ft_free(&buffer), ft_free(line));
+		if (nb == -1)
+			return (strerror(errno), ft_free(&buffer), ft_free(line));
 		buffer[nb] = '\0';
 		temp = ft_strjoin(*line, buffer);
 		if (!temp)
