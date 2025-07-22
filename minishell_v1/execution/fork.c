@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:51:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/22 00:48:09 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:45:41 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,10 @@ char	*check_if_exist_path(t_shell *val, t_cmd *cmd)
 	full_path = NULL;
 	if (ft_strchr(cmd->cmd[0], '/'))
 	{
-		if(access(cmd->cmd[0], F_OK) == 0 && access(cmd->cmd[0], X_OK) == -1)
-		{
-			errno = EACCES;
-			return (error_message(EACCES, cmd->cmd[0], NULL), NULL);
-		}
+		if (access(cmd->cmd[0], F_OK) == 0 && access(cmd->cmd[0], X_OK) == -1)
+			return (error_message(errno = EACCES, cmd->cmd[0], NULL), NULL);
 		if (check_if_is_a_directory(cmd->cmd[0]))
-		{
-			errno = EISDIR;
-			return (error_message(EISDIR, cmd->cmd[0], NULL), NULL);
-		}
+			return (error_message(errno = EISDIR, cmd->cmd[0], NULL), NULL);
 		if (!access(cmd->cmd[0], X_OK))
 			return (ft_strdup(cmd->cmd[0]));
 		if (access(cmd->cmd[0], F_OK))

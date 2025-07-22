@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:49:58 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 23:17:11 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:41:09 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ bool	init_shell_fds(t_shell *shell)
 		return (strerror(errno), false);
 	return (true);
 }
-
-
 
 bool	restore_standard_input(t_shell *shell)
 {
