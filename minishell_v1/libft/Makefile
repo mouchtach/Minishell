@@ -13,21 +13,27 @@ SRCS =		ft_strlen.c		ft_strdup.c		\
 			is_space.c		ft_strlcpy.c	\
 			ft_strcpy.c		ft_strcat.c 	\
 
+BLUE = \033[34m
+RED = \033[31m
+RESET = \033[0m
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $@ $(OBJS)
+	@ar rcs $@ $(OBJS)
+	@echo "$(BLUE)libft		compiled successfully$(RESET)"
 
 %.o: %.c libft.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "$(RED)libft		cleanup$(RESET)"
 
 re: fclean all
 

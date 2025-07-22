@@ -61,24 +61,31 @@ HDR =	minishell.h									\
 
 OBJ = $(SRC:.c=.o)
 
+BLUE = \033[34m
+RED = \033[31m
+RESET = \033[0m
+GREEN = \033[32m
+
 all: libft $(NAME)
 
 libft:
-	$(MAKE) -C ./libft
+	@$(MAKE) -C ./libft
 
 $(NAME): $(OBJ) $(LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(LDFLAGS) -o $@ $(RFLG)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) $(LDFLAGS) -o $@ $(RFLG)
+	@echo "$(GREEN)minishell	compiled successfully$(RESET)"
 
 %.o: %.c $(HDR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
-	$(MAKE) -C ./libft clean
+	@rm -f $(OBJ)
+	@$(MAKE) -C ./libft clean
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C ./libft fclean
+	@rm -f $(NAME)
+	@$(MAKE) -C ./libft fclean
+	@echo "$(RED)minishell	cleanup$(RESET)"
 
 re: fclean all
 
