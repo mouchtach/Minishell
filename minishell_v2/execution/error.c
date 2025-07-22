@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:04:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/04 00:24:21 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/22 00:52:47 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	file_error(int error_num, char *file_name)
 {
-	fprintf(stderr, ("minishell: "));
+	ft_putstr_fd("minishell: ", 2);
 	if (error_num == EACCES)
 		return (perror(file_name));
 	if (error_num == ENOENT)

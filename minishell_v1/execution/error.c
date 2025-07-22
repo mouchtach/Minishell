@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:04:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 19:16:55 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/22 00:51:27 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ void	error_message(int error_num, char *message, char *cmd)
 	else if (error_num == ELOOP)
 		return (perror("minishell"));
 	else
-		fprintf(stderr, ("%s\n"), message);
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(message, 2);
+	}
 }
