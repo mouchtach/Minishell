@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/22 15:59:36 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:21:57 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,34 +60,6 @@ typedef struct s_split
 	char				**tokens;
 }						t_split;
 
-typedef struct s_splt
-{
-	char				**tokens;
-	int					i;
-	int					token_idx;
-	int					start;
-	int					in_single;
-	int					in_double;
-}						t_splt;
-
-typedef struct s_amb
-{
-	bool				d_quotes;
-	bool				s_quotes;
-	bool				ambiguous;
-	int					r;
-}						t_ambg;
-
-typedef struct s_token
-{
-	char				*content;
-	bool				red;
-	bool				exp;
-	bool				amb;
-	t_type				type_token;
-	struct s_token		*next;
-}						t_token;
-
 typedef struct s_redirec
 {
 	char				*name;
@@ -137,51 +109,6 @@ typedef struct s_shell
 	int					std_backup[2];
 	int					g_exit_status;
 }						t_shell;
-
-typedef struct s_spl
-{
-	int					i;
-	int					r;
-	bool				f_quotes;
-	char				*new_token;
-}						t_spl;
-
-typedef struct s_refactor
-{
-	char				*new;
-	char				quotes;
-	int					r;
-	int					f;
-	bool				flag;
-}						t_refactor;
-
-typedef struct s_norm
-{
-	int					r;
-	int					pipe;
-}						t_norm;
-
-typedef struct s_cm
-{
-	int					size;
-	int					r;
-	int					i;
-}						t_cm;
-
-typedef struct s_cm1
-{
-	t_redirec			*new_red;
-	t_redirec			*tmp_red;
-}						t_cm1;
-
-typedef struct s_expa
-{
-	int					r;
-	int					len_key;
-	int					len_value;
-	char				*value;
-	char				*key;
-}						t_expa;
 
 typedef struct s_p_exp
 {
