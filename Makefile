@@ -30,6 +30,8 @@ SRC =	minishell.c									\
 		parsing/expansion/expansion.c 				\
 		parsing/expansion/expansion_utils.c			\
 		parsing/expansion/expansion_utils_b.c		\
+		parsing/expansion/expansion_utils_d.c		\
+		parsing/expansion/pre_expand_utils.c		\
 		parsing/expansion/expansion_utils_c.c		\
 		parsing/special_split.c						\
 		parsing/syntax_handle.c						\

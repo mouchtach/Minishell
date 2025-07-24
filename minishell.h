@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/22 15:59:36 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:05:29 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,37 +60,16 @@ typedef struct s_split
 	char				**tokens;
 }						t_split;
 
-typedef struct s_splt
+typedef struct s_pro
 {
-	char				**tokens;
-	int					i;
-	int					token_idx;
-	int					start;
-	int					in_single;
-	int					in_double;
-}						t_splt;
-
-typedef struct s_amb
-{
-	bool				d_quotes;
-	bool				s_quotes;
-	bool				ambiguous;
-	int					r;
-}						t_ambg;
-
-typedef struct s_token
-{
-	char				*content;
-	bool				red;
-	bool				exp;
-	bool				amb;
-	t_type				type_token;
-	struct s_token		*next;
-}						t_token;
+	const char	*line;
+	int			i;
+}				t_pro;
 
 typedef struct s_redirec
 {
 	char				*name;
+	bool				amb;
 	t_type				type;
 	struct s_redirec	*next;
 }						t_redirec;
@@ -98,7 +77,6 @@ typedef struct s_redirec
 typedef struct s_cmd
 {
 	char				**cmd;
-	bool				amb;
 	t_redirec			*redirec;
 	int					fd_herdoc[2];
 	int					fd_io[2];
@@ -138,51 +116,6 @@ typedef struct s_shell
 	int					g_exit_status;
 }						t_shell;
 
-typedef struct s_spl
-{
-	int					i;
-	int					r;
-	bool				f_quotes;
-	char				*new_token;
-}						t_spl;
-
-typedef struct s_refactor
-{
-	char				*new;
-	char				quotes;
-	int					r;
-	int					f;
-	bool				flag;
-}						t_refactor;
-
-typedef struct s_norm
-{
-	int					r;
-	int					pipe;
-}						t_norm;
-
-typedef struct s_cm
-{
-	int					size;
-	int					r;
-	int					i;
-}						t_cm;
-
-typedef struct s_cm1
-{
-	t_redirec			*new_red;
-	t_redirec			*tmp_red;
-}						t_cm1;
-
-typedef struct s_expa
-{
-	int					r;
-	int					len_key;
-	int					len_value;
-	char				*value;
-	char				*key;
-}						t_expa;
-
 typedef struct s_p_exp
 {
 	int					i;
@@ -207,7 +140,9 @@ int						is_var_char(char c);
 void					expand_cmd_heredoc(char **cmd, t_shell *shell, int fd);
 
 char					*exit_stats(t_exp *exp);
-
+char					*get_pre_expanded_value(char *var_name, t_shell *shell);
+char					*get_pre_env_value(t_list *env, char *key);
+char					*expand_single_token(char *token, t_shell *shell);
 /* Expansion functions*/
 void					init_expand(t_exp *exp);
 char					*get_env_value(t_list *env, char *key);
@@ -217,6 +152,8 @@ void					expand_cmd_list(t_cmd *cmd_list, t_shell *shell);
 int						calculate_expanded_length(char *str, t_shell *shell);
 char					*expand_variables_in_token(char *token, t_shell *shell);
 void					expand_cmd_array(char **cmd, t_shell *shell);
+char					*add_quotes(char *s);
+int						is_redname(const char *s, int i);
 void					expand_redirection_list(t_redirec *redirec,
 							t_shell *shell);
 char					*get_expanded_value(char *var_name, t_shell *shell);
@@ -225,12 +162,12 @@ void					remove_quotes_from_redirection_list(t_redirec *redirec);
 void					process_dollar_sign(char *token, t_exp *exp,
 							t_shell *shell);
 void					h_quotes(char c, t_exp *exp);
+int						count_words_alpha_quoted(char *str);
 
 /* Redirection functions */
 t_redirec				*create_redirec_node(char *name, t_type type);
 void					add_redirec_node(t_redirec **head, t_redirec *new);
 void					free_redirec_list(t_redirec *head);
-void					print_redirec_list(t_redirec *head);
 int						check_redirection_type(char **str, int i);
 int						first_token_is_fully_quoted(char *cmd_str);
 int						is_redir_char(char c);
@@ -272,6 +209,7 @@ int						allocate_token(t_cmd **token, char **cmds);
 int						setup_cmd_struct(t_cmd *current, char *cmd_str);
 int						create_next_node(t_cmd *current, int has_next);
 t_cmd					*get_first_cmd(t_cmd *node);
+void					array_free(char **c);
 
 /* Helper functions from utils_b.c */
 int						arg_create(t_cmd *token, char **cmds);
