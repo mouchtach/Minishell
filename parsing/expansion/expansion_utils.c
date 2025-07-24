@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azhar <azhar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:03:36 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/20 23:26:41 by azhar            ###   ########.fr       */
+/*   Updated: 2025/07/24 19:12:24 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,16 @@ char	*expand_variables_in_token(char *token, t_shell *shell)
 void	expand_cmd_array(char **cmd, t_shell *shell)
 {
 	int		i;
-	char	*expanded;
+	char	*new_token;
 
 	if (!cmd || !shell)
 		return ;
 	i = 0;
 	while (cmd[i])
 	{
-		expanded = expand_variables_in_token(cmd[i], shell);
-		if (expanded)
-		{
-			free(cmd[i]);
-			cmd[i] = expanded;
-		}
+		new_token = expand_single_token(cmd[i], shell);
+		free(cmd[i]);
+		cmd[i] = new_token;
 		i++;
 	}
 }
@@ -110,10 +107,16 @@ void	expand_redirection_list(t_redirec *redirec, t_shell *shell)
 	if (!redirec || !shell)
 		return ;
 	current = redirec;
+	redirec->amb = false;
 	while (current)
 	{
 		expanded = expand_variables_in_token(current->name, shell);
-		if (expanded && current->type != D_HERDOC
+		if (count_words_alpha_quoted(expanded) > 1 || expanded[0] == '\0')
+		{
+			redirec->amb = true;
+			free(expanded);
+		}
+		else if (expanded && current->type != D_HERDOC
 			&& current->type != D_HERDOC_Q)
 		{
 			free(current->name);
