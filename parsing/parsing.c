@@ -6,7 +6,7 @@
 /*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:24:41 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/24 19:03:39 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:14:56 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	parse_input(char *line, t_shell *var)
 	char	*pre_line;
 	int		status;
 
+	add_history(line);
 	pre_line = pre_expand_line_if_needed(line, var);
 	status = parse_commands(pre_line, var);
 	free(pre_line);
@@ -65,7 +66,6 @@ int	process_line(char *line, t_cmd **token_ptr)
 {
 	if (ft_strlen(line) <= 0)
 		return (0);
-	add_history(line);
 	*token_ptr = tokenization(line);
 	return (0);
 }
