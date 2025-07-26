@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:45:30 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 19:19:40 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/26 16:35:22 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ bool	duplicate_standard_fds(t_cmd *cmd)
 
 bool	set_input(t_cmd *command, t_redirec *in)
 {
+	if (in->amb)
+		return (error_message(-1, in->name, NULL), false);
 	if (command->fd_io[0] != STDIN_FILENO
 		&& command->fd_io[0] != command->fd_herdoc[0])
 		close(command->fd_io[0]);
@@ -70,6 +72,8 @@ bool	set_input(t_cmd *command, t_redirec *in)
 
 bool	set_output(t_cmd *command, t_redirec *out)
 {
+	if (out->amb)
+		return (error_message(-1, out->name, NULL), false);
 	if (command->fd_io[1] != STDOUT_FILENO)
 	{
 		close(command->fd_io[1]);
