@@ -107,9 +107,9 @@ void	expand_redirection_list(t_redirec *redirec, t_shell *shell)
 	if (!redirec || !shell)
 		return ;
 	current = redirec;
-	current->amb = false;
 	while (current)
 	{
+		current->amb = false;
 		expanded = expand_variables_in_token(current->name, shell);
 		if (count_words_alpha_quoted(expanded) > 1 || expanded[0] == '\0')
 		{
