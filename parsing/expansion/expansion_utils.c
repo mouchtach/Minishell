@@ -6,7 +6,7 @@
 /*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:03:36 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/24 19:12:24 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:05:36 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,13 @@ void	expand_redirection_list(t_redirec *redirec, t_shell *shell)
 	if (!redirec || !shell)
 		return ;
 	current = redirec;
-	redirec->amb = false;
+	current->amb = false;
 	while (current)
 	{
 		expanded = expand_variables_in_token(current->name, shell);
 		if (count_words_alpha_quoted(expanded) > 1 || expanded[0] == '\0')
 		{
-			redirec->amb = true;
+			current->amb = true;
 			free(expanded);
 		}
 		else if (expanded && current->type != D_HERDOC
