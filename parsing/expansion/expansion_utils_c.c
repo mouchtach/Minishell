@@ -6,7 +6,7 @@
 /*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:20:51 by azhar             #+#    #+#             */
-/*   Updated: 2025/07/24 19:02:26 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:36:35 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static int	handle_special_variables(char *token, t_exp *exp)
 
 	if (token[exp->i + 1] == '\0')
 		return (exp->result[exp->j++] = '$', exp->i++, 1);
+	if (token[exp->i + 1] == '@' || token[exp->i + 1] == '*')
+		return (free(exp->result), exp->result = ft_strdup(""), exp->i += 2, 1);
 	if (token[exp->i + 1] == '0')
 	{
 		free(exp->result);
 		exp->result = ft_strdup("minishell");
-		exp->j += 9;
-		exp->i += 2;
-		return (1);
+		return (exp->i += 2, exp->j += 9, 1);
 	}
 	if (token[exp->i + 1] == '?')
 	{

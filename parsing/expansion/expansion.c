@@ -6,7 +6,7 @@
 /*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:00:00 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/24 19:02:43 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:55:00 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,11 @@ int	get_var_len(char *str, int start)
 	len = 0;
 	if (str[start] == '$')
 	{
-		if (ft_isalnum(str[start + 1]) || (str[start + 1] == '@' || str[start
-					+ 1] == '-' || str[start + 1] == '*'))
+		if (is_var_char(str[start + 1]))
 		{
 			len = 1;
-			while ((str[start + len]) && (ft_isalnum(str[start + len])
-					|| str[start + len] == '_' || str[start + len] == '@'))
+			while ((str[start + len]) && (isalnum(str[start + len]) || str[start
+						+ len] == '_' ))
 				len++;
 		}
 	}
@@ -58,6 +57,16 @@ char	*extract_var_name(char *str, int start, int len)
 	return (var_name);
 }
 
+int	is_export(char *s)
+{
+	char	*p;
+
+	p = remove_quotes(s);
+	if (ft_strcmp(p, "export"))
+		return (free(p), 0);
+	return (free(p), 1);
+}
+
 void	expand_cmd_list(t_cmd *cmd_list, t_shell *shell)
 {
 	t_cmd	*current;
@@ -67,7 +76,8 @@ void	expand_cmd_list(t_cmd *cmd_list, t_shell *shell)
 	current = cmd_list;
 	while (current)
 	{
-		expand_cmd_array(current->cmd, shell);
+		if (!is_export(current->cmd[0]))
+			expand_cmd_array(current->cmd, shell);
 		expand_redirection_list(current->redirec, shell);
 		remove_quotes_from_cmd_array(current->cmd);
 		remove_quotes_from_redirection_list(current->redirec);

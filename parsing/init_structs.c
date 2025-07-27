@@ -6,7 +6,7 @@
 /*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:19:26 by azhar             #+#    #+#             */
-/*   Updated: 2025/07/24 19:03:33 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:35:48 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_var_char(char c)
 {
-	return (c == '_' || c == '?' || c == '*' || c == '@' || ft_isalnum(c));
+	return (c == '_' || c == '*' || c == '@' || ft_isalnum(c));
 }
 
 int	is_redir_char(char c)

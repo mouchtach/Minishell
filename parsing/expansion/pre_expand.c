@@ -6,7 +6,7 @@
 /*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:10:11 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/24 19:03:02 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:09:34 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ static int	handle_var_expansion(t_pro pro, t_shell *shell,
 	char	*var_name;
 	char	*value;
 
-	(void)index;
 	var_len = 0;
-	while (is_var_char(pro.line[pro.i + 1 + var_len]))
+	while (isalnum(pro.line[pro.i + 1 + var_len])
+		||pro.line[pro.i + 1 + var_len] == '_'
+		|| pro.line[pro.i + 1 + var_len] == '$')
 		var_len++;
 	var_name = ft_substr(pro.line, pro.i + 1, var_len);
 	if (!var_name)
