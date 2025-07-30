@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 17:24:27 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/30 15:48:41 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:07:28 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exit_s(int status)
 {
-	int static	exit_status;
+	static int	exit_status;
 
 	if (status == -1)
 		return (exit_status);
