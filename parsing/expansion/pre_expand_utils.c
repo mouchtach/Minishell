@@ -6,7 +6,7 @@
 /*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:00:00 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/24 19:02:57 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/30 16:50:38 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	count_alpha_words_unquoted(char *str)
 	in_word = 0;
 	while (str[i])
 	{
-		if (ft_isalpha((unsigned char)str[i]))
+		if ((unsigned char)str[i] != ' ')
 		{
 			if (!in_word)
 			{

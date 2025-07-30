@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils_c.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:20:51 by azhar             #+#    #+#             */
-/*   Updated: 2025/07/30 15:47:48 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/30 17:57:02 by azmakhlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static int	handle_variable_expansion(char *token, t_exp *exp, t_shell *shell)
 
 void	process_dollar_sign(char *token, t_exp *exp, t_shell *shell)
 {
-	if (exp->in_single)
+	if (exp->in_single || (exp->in_double && !ft_strcmp(remove_quotes(token),
+				"$")))
 	{
 		exp->result[exp->j++] = token[exp->i++];
 		return ;
