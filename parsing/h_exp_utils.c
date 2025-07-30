@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   h_exp_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 12:12:30 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/24 19:03:27 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:47:18 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*exit_stats(t_exp *exp)
 {
 	char	*exit_status_str;
 
-	exit_status_str = ft_itoa(g_exit_status);
+	exit_status_str = ft_itoa(exit_s(-1));
 	if (!exit_status_str)
 		return (exp->result[exp->j++] = '0', exp->i += 2, NULL);
 	exp->j += ft_strlen(exit_status_str);

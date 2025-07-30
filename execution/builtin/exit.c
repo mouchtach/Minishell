@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:22:52 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 23:30:37 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:46:54 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	ft_exit(char **cmd, t_shell **shell)
 			exit(255);
 		}
 		else
-			g_exit_status = ft_atoi(cmd[1]);
+			exit_s(ft_atoi(cmd[1]));
 	}
 	else
-		g_exit_status = 0;
+		exit_s(0);
 	cleanup_shell(shell);
-	exit(g_exit_status);
+	exit(exit_s(-1));
 }

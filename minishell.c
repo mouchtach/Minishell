@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 22:19:39 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/23 12:05:35 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:43:43 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-
-int		g_exit_status;
 
 static void	clean_resources(t_shell *var, char *line)
 {
@@ -38,7 +36,6 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (1);
 	var->env = environment(env);
-	g_exit_status = 0;
 	while (1)
 	{
 		set_signals_main();

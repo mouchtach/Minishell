@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/24 19:05:29 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:49:01 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define GET_LINE "minishell get next line faild"
 # define ERR_MEM "minishell alloc"
 
-extern int				g_exit_status;
 typedef enum s_type
 {
 	WORD,
@@ -113,7 +112,6 @@ typedef struct s_shell
 	t_cmd				*list;
 	t_list				*env;
 	int					std_backup[2];
-	int					g_exit_status;
 }						t_shell;
 
 typedef struct s_p_exp
@@ -235,11 +233,6 @@ char					*remove_quotes(char *token);
 int						is_fully_quoted(char *str);
 int						contains_only_quotes_and_spaces(char *cmd_str);
 
-// void						set_signals_main(void);
-// void						set_signals_child(void);
-// int						g_exit_status(int val);
-// int						control_g(bool option, bool value);
-
 // EXECUTION
 
 # ifndef BUFFER_SIZE
@@ -321,4 +314,5 @@ void					signal_herdoc(int sig);
 void					set_signals_main(void);
 // exit status
 bool					wait_and_exit(int pid);
+int						exit_s(int status);
 #endif

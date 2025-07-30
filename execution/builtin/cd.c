@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:26:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 23:45:07 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/30 16:22:30 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*resolve_cd_path(char *str, t_list *env)
 	else if (!ft_strcmp(str, "-"))
 	{
 		ret = get_value(env, "OLDPWD");
-		if (!ret)
+		if (!ret || !*ret)
 			return (printf("cd: OLDPWD not set\n"), NULL);
 		return (ret);
 	}

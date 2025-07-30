@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:36:03 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/21 23:22:12 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:45:30 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_exit_status = 1;
+	exit_s(1);
 }
 
 void	set_signals_main(void)

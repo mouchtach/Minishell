@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 19:57:16 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/08 23:22:45 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/30 16:18:01 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	export_new(char *str, t_shell *var)
 	if (!key)
 	{
 		free(value);
-		printf("export: `%s': not a valid identifier\n", str);
+		printf("minishell: export: `%s': not a valid identifier\n", str);
 		return (1);
 	}
 	add_export_list(&var->env, value, key, eg);
