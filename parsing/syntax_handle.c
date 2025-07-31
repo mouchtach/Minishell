@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azmakhlo <azmakhlo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:50:24 by azmakhlo          #+#    #+#             */
-/*   Updated: 2025/07/30 18:10:34 by azmakhlo         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:25:14 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,9 @@ int	handle_redir(char *line)
 	while (cmd[i])
 	{
 		if (!redire_check(cmd[i]) && !cmd[i + 1])
-			return (printf("minishell: syntax error"
-					"near unexpected token `newline'\n"),
-				free_cmd_array(cmd),
-				1);
+			return (parssing_error(NULL, 1), free_cmd_array(cmd), 1);
 		if (!redire_check(cmd[i]) && !redire_check(cmd[i + 1]))
-			return (printf("minishell: syntax error"
-					"near unexpected token `%s'\n",
-					cmd[i + 1]),
-				free_cmd_array(cmd),
-				1);
+			return (parssing_error(cmd[i + 1], 2), free_cmd_array(cmd), 1);
 		i++;
 	}
 	return (free_cmd_array(cmd), 0);
@@ -118,13 +111,14 @@ int	syntax_error(char *line)
 	if (handle_pipe(line))
 	{
 		exit_s(2);
-		return (printf("minishell: syntax error near unexpected token `|'\n"),
-			1);
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+		return (1);
 	}
 	if (handle_quotes(line))
 	{
 		exit_s(2);
-		return (printf("minishell: quoting error\n"), 1);
+		ft_putstr_fd("minishell: quoting error\n", 2);
+		return (1);
 	}
 	if (handle_redir(line))
 	{

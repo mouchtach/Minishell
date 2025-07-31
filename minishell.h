@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:19:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/07/30 15:49:01 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:21:49 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ char					*get_value(t_list *env, char *key);
 int						ft_echo(char **cmd);
 // error
 void					error_message(int error_num, char *message, char *cmd);
+void					parssing_error(char *str, int i);
 // list_utils
 int						list_size(t_list *list);
 void					list_add_back(t_list **list, t_list *new);

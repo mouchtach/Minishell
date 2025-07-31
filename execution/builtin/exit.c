@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:22:52 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/30 15:46:54 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:13:54 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ int	ft_exit(char **cmd, t_shell **shell)
 	{
 		if (cmd[2] && ft_is_numeric(cmd[1]))
 		{
-			printf("minishell: exit: too many arguments\n");
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			return (1);
 		}
 		if (!ft_is_numeric(cmd[1]))
 		{
-			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
+			ft_putstr_fd("minishell: exit: ", 2);
+			ft_putstr_fd(cmd[1], 2);
+			ft_putstr_fd("numeric argument required\n", 2);
 			exit(255);
 		}
 		else

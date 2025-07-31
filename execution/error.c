@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:04:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/26 16:36:20 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:21:26 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,21 @@ void	error_message(int error_num, char *message, char *cmd)
 		return (perror("minishell"));
 	else if (error_num == ELOOP)
 		return (perror("minishell"));
+}
+
+void	parssing_error(char *str, int i)
+{
+	ft_putstr_fd("minishell :", 2);
+	if(i == 1)
+	{
+		ft_putstr_fd("minishell: syntax error"
+			"near unexpected token `newline'\n", 2);
+	}
+	if(i == 2)
+	{
+		ft_putstr_fd("minishell: syntax error"
+			"near unexpected token `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("'\n" , 2);
+	}
 }

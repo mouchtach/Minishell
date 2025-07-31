@@ -6,7 +6,7 @@
 /*   By: ymouchta <ymouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:26:33 by ymouchta          #+#    #+#             */
-/*   Updated: 2025/07/30 16:22:30 by ymouchta         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:08:55 by ymouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ char	*resolve_cd_path(char *str, t_list *env)
 	{
 		ret = get_value(env, "HOME");
 		if (!ret)
-			return (printf("cd: HOME not set\n"), NULL);
+			return (ft_putstr_fd("cd: HOME not set\n", 2), NULL);
 		return (ret);
 	}
 	else if (!ft_strcmp(str, "-"))
 	{
 		ret = get_value(env, "OLDPWD");
 		if (!ret || !*ret)
-			return (printf("cd: OLDPWD not set\n"), NULL);
+			return (ft_putstr_fd("cd: OLDPWD not set\n", 2), NULL);
 		return (ret);
 	}
 	else if (!ft_strncmp(str, "~/", 2))
